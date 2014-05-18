@@ -177,4 +177,8 @@ daav(
     char **free_ptr,
     char *init_ptr)
 
+Common Usage:
+    a. das()/valloc()/daa() - find size necessary then allocate memory then populate allocated memory
+    b. daav()               - all in one
+
 ```

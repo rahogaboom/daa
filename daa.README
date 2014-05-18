@@ -181,3 +181,7 @@ das(
     unsigned int *dim,
     int *err_code)
 
+Common Usage:
+    a. das()/valloc()/daa() - find size necessary then allocate memory then populate allocated memory
+    b. daav()               - all in one
+
