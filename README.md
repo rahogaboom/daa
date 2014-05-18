@@ -9,6 +9,7 @@ Dynamic Array Allocator C/C++
   - array or slices of array can be passed to subroutines to any depth, modifed there, and be seen at all levels
   - initialization pointer argument set to instance of initialized type
   - see article in Embedded Systems Programming, Dec. 2000, "Flexible Dynamic Array Allocation"(included)
+  - 16 verification tests that show complex code usage examples
 
 
 API:
