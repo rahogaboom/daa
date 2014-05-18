@@ -13,6 +13,7 @@ Dynamic Array Allocator C/C++
 
 API:
 
+```
  daav:
      dynamic array allocation with memory allocated by valloc().
 
@@ -142,3 +143,4 @@ API:
 
  int das(unsigned int data_size, unsigned int num_dim, unsigned int *dim, int *err_code)
 
+```
