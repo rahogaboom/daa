@@ -2,12 +2,13 @@ daa
 ===
 
 Dynamic Array Allocator C/C++
-  - ptr to ptr to ... style arbitrary N dimensional
+  - ptr to ptr to ... style arbitrary N dimensional, implemented by a recursive routine which calls
+    two other different recursive routines
   - arbitrary starting subscript(0, 1, -10, ...) for each separate dimension
   - allocates anything of any type(double, int, long, struct, ...) that you can take sizeof() on
   - one contiguous block allocation of memory for all ptr's and data(locality of reference and easy free())
   - array or slices of array can be passed to subroutines to any depth, modifed there, and be seen at all levels
-  - initialization pointer argument set to instance of initialized type
+  - initialization pointer argument set to instance of initialized type or NULL
   - see article in Embedded Systems Programming, Dec. 2000, "Flexible Dynamic Array Allocation"(included)
   - 16 verification tests that show complex code usage examples
 
