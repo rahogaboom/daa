@@ -1,0 +1,141 @@
+
+A Flexible Dynamic Array Allocator
+
+The C Users Journal
+
+By Dick Hogaboom, November 1, 1990
+
+Note: See the repo code for the Listings 1 and 2
+
+
+Many C applications require the dynamic allocation of memory, as lists, queues, stacks, or arrays.
+To be useful some of these structures require initialization. Lists, for example, usually require a
+defined structure for link pointers. Stacks, on the other hand, are fundamentally structureless and
+require only a few position pointers. Arrays are typically implemented as a series of pointers [[[to
+pointers] to pointers] etc.]to data. Your compiler usually handles all this statically at compile
+time. On occasion, however, you'll need more memory than you've got. If you don't need all the
+structures simultaneously, you can circumvent memory limitations by a heap space dynamic
+allocation/free sequence.
+
+I ran into this problem when I integrated several complex FORTRAN subroutines into a C code control
+skeleton on a Sun 3/260 system. The subroutines were based on an algorithm that set up temporary
+multidimensional arrays in a well-defined sequence — a perfect candidate for dynamic allocation. I
+was running out of space fast and had several more modules to integrate, when I decided to redesign
+the application with a dynamic array allocator.
+
+The C language doesn't support raw memory allocation, much less dynamic array allocation. However,
+the newly finalized ANSI C standard provides functions for raw heap space memory allocation,
+malloc(), calloc(), realloc() — and in this case valloc() — provide raw space that can be
+initialized with the necessary array pointer structure.
+
+The usual approach is to malloc() separately the space for the array pointer structure and the array
+data area. Each call to malloc() returns the necessary pointer that must be stored in the previous
+level of pointer indirection. The disadvantage of this approach is that multiple malloc()s result in
+an array structure whose component levels of pointers and data elements are not necessarily
+contiguous. Each invocation of malloc() may seize space at widely non-contiguous points in virtual
+memory, worse yet, if you are on a paged virtual memory managed machine, the memory may reside on
+different virtual pages. Any array reference can thus result in the trapping of one or more pages,
+depending on the number of levels of indirection, into real memory — very inefficient compared to
+simple pointer indirection calculations on a single page. Another disadvantage of the multiple
+malloc() scheme is backing out upon allocation failure. Freeing memory upon allocation failure is
+complicated.
+
+If you know the number of dimensions, dimension limits, and data size, you can calculate memory
+requirements for both the data and pointers and allocate it with a single call. If the allocation
+fails, you don't need to worry about freeing memory. A successful allocation, however, will yield an
+optimal array structure with the maximum of locality of reference. SunOS provides valloc(), similar
+to malloc(), to position the beginning of the allocated memory on a virtual page boundary. Arrays of
+less than a page will either be entirely in or out of memory. Beware, though — the valloc() function
+is not an ANSI standard, and you sacrifice portability.
+
+Function Overview
+
+I know that a good number of dynamic array allocation routines already exist, but most have
+limitations, like allocating only a certain C type or limiting you to a fixed number of dimensions.
+I wanted an efficient and flexible routine, and Listing 2 is the result. See Listing 1 for the
+function declaration.
+
+Function Parameters
+
+Size refers to the size in bytes of the basic data type to be allocated. Normally you'll obtain it
+by using the sizeof C operator. You can use any data type that sizeof can be applied to — I've
+tested arrays of int, double, float, struct, enum, union, and typedef. The second parameter is the
+number of dimensions, from one to ten. I chose the ten cutoff arbitrarily, since it seemed unlikely
+that anyone would want anything larger. At any rate, the choice only impacts the error check
+routine. The third parameter is a single dimensional array of dimension sizes corresponding to each
+of the array dimensions. If the array is to be a[10][10][5], then the first three elements of
+dimensions[] would be 10, 10, and 5. The fourth parameter, start[], is the starting dimension
+subscript for each dimension. If all dimensions are to start at zero, as is usual in C, then this
+array would be initialized to zero for each dimension. However, you can individually subscript each
+dimension from an arbitrary integer starting subscript. Thus, using the array a[10][10][5] with
+start[] set to -1, 0, 1 results in subscripts running from -1 to 8, 0 to 9, and 1 to 5. The fifth
+parameter, err_code, returns zero upon no error and a positive integer on error. I describe the
+possible errors and their associated codes in the preamble of Listing 2.
+
+The sixth parameter, free_ptr, is a pointer used to free the allocated space. Don't free on the
+function return pointer, since arrays of non-zero subscripted first dimensions will not point to the
+allocated space, but to some offset based on the subscript offset of the first dimension. The last
+parameter, init_ptr, is a pointer to the basic data type that contains initialization data to be
+replicated throughout the elements of the array, or to NULL if you prefer not to initialize. The
+initialization argument pointer should point to something corresponding to the size given in the
+first argument. If the first argument was sizeof(int), then the last argument should point to int.
+If the first argument was sizeof(struct s), then the last argument should be a type pointer to
+struct s. daa( ) will use the first argument to get the size in bytes of whatever init_ptr points
+to.
+
+The return value is a pointer to the start of the array, returned as NULL upon error. To reference
+the array with the desired number of subscripts, you need to cast this pointer to the type of the
+array. The rule is simple: first comes the array type and then a number of stars equal to the number
+of dimensions. If you need a two-dimensional integer array, then cast to (int **). If you're making
+a ten-dimensional array, then use (int **********). The declaration is very unusual, but correct!
+The pointer variable you use to reference the array will need to be declared similarly, e.g. int
+**********array. Your ten-dimensional array reference would be array[i][j][k][l][m][n][o][p][q][-].
+
+Listing 2 gives you the complete daa( ) source code. You'll find examples of argument setup, daa( )
+invocation, array usage and error codes in the documentary preamble. For brevity I've omitted the
+check for a NULL return, but you should not.
+
+Dissecting The Code The code in daa.c starts off with some error-checking and proceeds to the array
+setup required for the linked pointer structure. Then I calculate the total size of the raw space
+necessary for the array (pointer structure plus data storage), and allocate it with valloc(). I
+obtain both the last parameter address, and the size of the basic data type. I use the data type
+size to get that number of bytes from the stack and initialize the part of the just allocated array
+space that is basic data type storage. Finally, the actual work of pointer structure setup is done
+with a call to al(0, dim_ind) which returns the final array pointer returned from daa().  The real
+meat of daa() is the recursive routine al() and two other recursive routines that al() calls — off()
+and doff(). The basic allocation routine, al(), repeatedly calls itself with each new invocation
+descending to a lower level in the pointer array hierarchy. The first argument, level, is
+incremented by one for each successive array dimension. For a three-dimensional array, the level
+would go from 0 to 2. The dim_ind[] array tells each recursive invocation of al( ) exactly where
+within each level the pointers returned from the next level are to be stored. dim_ind[] will have,
+in some recursive call, every combination of array values. Initially dim_ind[] will be zeroed.
+Successive calls will increment each dimension level by one from zero to the maximum subscript.
+Thus, a two-dimensional array dimensioned 10x10 will see dim_ind[0] go from 0 to 9 and dim_ind[1] go
+from 0 to 9.
+
+Every pointer is composed of the sum of three parts: 1) the constant base of the array, 2) the
+offset of the arrays of pointers for a given level, calculated by off() and 3) the data offset of
+the arrays of pointers within each level, calculated by doff(). The last level is different since
+it's the data element level which has a different element size, and because no further levels are
+called. To accommodate non-zero starting subscripts, I had to make adjustments to the pointers in
+three places. Each recursive call to al() has its return value adjusted by an amount based on that
+level's desired starting subscript from the start[] array. Basically, I adjust the level zero
+pointer returned by daa( ) by the desired starting subscript of the first dimension. I also adjust
+the passed-back pointer for one-dimensional arrays when no pointer structure is needed.
+
+The easiest way to verify the accuracy of the algorithm is to put a printf() statement just before
+or after the recursive call to al(), and print out the level, the dim_ind[] array, and the
+difference of the returned pointers and the base pointer. The pointer difference gives the offset
+into the raw space of each level and sublevel of pointer. This way, you can verify that the correct
+number of pointers for each level is being allocated.
+
+Conclusion
+
+I've tested this routine in many environments and am confident in its accuracy. It is as
+efficient as array access goes and flexible enough to allocate arrays of anything, with the added
+wrinkle of non-zero subscripting. You're still responsible for using the proper range of subscripts.
+To do otherwise results in the same usage error as misaccessing traditional zero-based C arrays.
+This routine is not strictly ANSI-conforming. Converting daa to ANSI-compatible code requires
+changing several features, among them the call to valloc() and the use of a pointer to void instead
+of a pointer to char.
+
