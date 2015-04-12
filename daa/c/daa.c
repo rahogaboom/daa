@@ -103,7 +103,7 @@ const unsigned int ERRS_FAIL_ALLOC = 3;
  */
 
 /* error msgs */
-char *daa_errs[] =
+const char *daa_errs[] =
 {
     "daa: invalid number of dimensions - must be > 0 and <= MAX_DIM.",
     "daa: invalid request size - must be > 0.",
