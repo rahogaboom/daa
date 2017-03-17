@@ -1,7 +1,10 @@
+
+```
+
 daa
 ===
 
-Dynamic Array Allocator C/C++
+Dynamic Array Allocator - C/C++
   - ptr to ptr to ... style arbitrary N dimensional, implemented by a recursive routine(ptr_init()) which calls
     two other different recursive routines(off() and doff())
   - arbitrary starting subscript(0, 1, -10, ...) for each separate dimension
@@ -14,10 +17,25 @@ Dynamic Array Allocator C/C++
   - 16 verification tests that show complex code usage examples, for C see daac_test.c and for C++ see daacpp_test.cpp
 
 
+Files:
+
+    daa.h - declaration header file for both daa.c and daa.cpp
+
+    c directory:
+        daac.mk         - build script, builds static and dynamic libraries.
+                            builds and executes test program.
+        daa.c           - ANSI C implementation
+        daac_test.c     - daa.c test program
+
+    cpp directory:
+        daacpp.mk       - build script, builds static and dynamic libraries.
+                            builds and executes test program.
+        daa.cpp         - ANSI C++ implementation
+        daacpp_test.cpp - daa.cpp test program
+
+
 API:
 
-
-```
 /*
  *------------------------------------------------------------------------------
  * das:

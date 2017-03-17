@@ -61,7 +61,7 @@ main()
         char *free_ptr;
         unsigned int d[4] = {3, 5, 4, 2};
         int st[4] = {-1, -5, 10, 0};
-        double ****array;
+        double ****array = NULL;
 
         fprintf(stderr, "\nTEST 1\n");
 
@@ -124,7 +124,7 @@ main()
         unsigned int d[4] = {3, 5, 4, 2};
         int st[4] = {-1, -5, 10, 0};
         double init = 123.;
-        double ****array;
+        double ****array = NULL;
 
         fprintf(stderr, "\nTEST 2\n");
 
@@ -186,7 +186,7 @@ main()
         unsigned int d[1] = {10};
         int st[1] = {1};
         double init = 10.10;
-        double *array;
+        double *array = NULL;
 
         fprintf(stderr, "\nTEST 3\n");
 
@@ -244,7 +244,7 @@ main()
         int st[10] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5};
         double data;
         double init = 0;
-        double **********array;
+        double **********array = NULL;
 
         fprintf(stderr, "\nTEST 4\n");
 
@@ -329,7 +329,7 @@ main()
         struct s {
             double d;
             int l;
-        } *array, s_init = {1.25, 5};
+        } *array = NULL, s_init = {1.25, 5};
 
         fprintf(stderr, "\nTEST 5\n");
 
@@ -386,7 +386,7 @@ main()
         struct s {
             double d;
             int l;
-        } **array, s_init = {1, 5};
+        } **array = NULL, s_init = {1, 5};
 
         fprintf(stderr, "\nTEST 6\n");
 
@@ -448,7 +448,7 @@ main()
             char c;
             int l;
             double d;
-        } ***array, s_init = {0, 1, 10};
+        } ***array = NULL, s_init = {0, 1, 10};
 
         fprintf(stderr, "\nTEST 7\n");
 
@@ -514,7 +514,7 @@ main()
             double d;
             int l;
             char c;
-        } ***array, s_init = {1, 10, 0};
+        } ***array = NULL, s_init = {1, 10, 0};
 
         fprintf(stderr, "\nTEST 8\n");
 
@@ -571,7 +571,7 @@ main()
         unsigned int d[1] = {10};
         int st[1] = {1};
         int init = 12;
-        int *array;
+        int *array = NULL;
 
         fprintf(stderr, "\nTEST 9\n");
 
@@ -623,7 +623,7 @@ main()
         int st[2] = {-20, 20};
         int data;
         int init = 0;
-        int **array;
+        int **array = NULL;
 
         fprintf(stderr, "\nTEST 10\n");
 
@@ -686,7 +686,7 @@ main()
         int st[3] = {-10, -20, -30};
         int data;
         int init = 2;
-        int ***array;
+        int ***array = NULL;
 
         fprintf(stderr, "\nTEST 11\n");
 
@@ -755,7 +755,7 @@ main()
         union s {
             int l;
             double d;
-        } ***array, s_init = {5};
+        } ***array = NULL, s_init = {5};
 
         fprintf(stderr, "\nTEST 12\n");
 
@@ -806,7 +806,7 @@ main()
         char *free_ptr;
         unsigned int d[3] = {2, 5, 6};
         int st[3] = {0, 0, 0};
-        enum e {a,b,c} ***array, e_init = {c};
+        enum e {a,b,c} ***array = NULL, e_init = {c};
 
         fprintf(stderr, "\nTEST 13\n");
 
@@ -859,7 +859,7 @@ main()
         unsigned int d[2] = {15, 5};
         int st[2] = {-1, -1};
         short init = 11;
-        short **array;
+        short **array = NULL;
 
         fprintf(stderr, "\nTEST 14\n");
 
@@ -914,7 +914,7 @@ main()
         unsigned int d[2] = {4, 5};
         int st[2] = {0, 1};
         unsigned short init = 13;
-        unsigned short **array;
+        unsigned short **array = NULL;
 
         fprintf(stderr, "\nTEST 15\n");
 
@@ -972,13 +972,13 @@ main()
 
         #define FOUR_MEGS (4*1024*1024)
 
-	/* four megs of unsigned char */
-	typedef struct
-	{
-	    unsigned char s[FOUR_MEGS];
-	} STRING_FOUR_MEGS;
+	    /* four megs of unsigned char */
+	    typedef struct
+	    {
+	        unsigned char s[FOUR_MEGS];
+	    } STRING_FOUR_MEGS;
 
-        STRING_FOUR_MEGS *array;
+        STRING_FOUR_MEGS *array = NULL;
 
 
 
