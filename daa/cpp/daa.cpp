@@ -1,5 +1,6 @@
+
 /*
- *==============================================================================
+ *==================================================================================================
  * File: daa.cpp
  *
  *     Based on Dec. 2000 Embedded Systems Design article "Flexible Dynamic
@@ -34,12 +35,12 @@
  *     zero based or minus one based or any based for that matter.
  *
  * Examples:
- *     see daacpp_test.cpp
+ *     see daa_test.cpp
  *
  * Author:
  *    Richard Hogaboom
  *
- *==============================================================================
+ *==================================================================================================
  */
 
 /*
@@ -63,21 +64,9 @@
  *        University Press, 1992, pg. 20.
  */
 
-/*
- *------------------------------------------------------------------------------
- * include files
- *------------------------------------------------------------------------------
- */
-
 #include <malloc.h>
 
-#include "daa.h"
-
-/*
- *------------------------------------------------------------------------------
- * constants
- *------------------------------------------------------------------------------
- */
+#include "daa.hpp"
 
 /* global constants */
 const unsigned int MAX_DIM = 256; /* maximum number of array dimensions */
@@ -87,18 +76,6 @@ const unsigned int ERRS_INV_DIMS = 0;
 const unsigned int ERRS_INV_REQ_SIZE = 1;
 const unsigned int ERRS_INV_DIM = 2;
 const unsigned int ERRS_FAIL_ALLOC = 3;
-
-/*
- *------------------------------------------------------------------------------
- * data types
- *------------------------------------------------------------------------------
- */
-
-/*
- *------------------------------------------------------------------------------
- * global variables
- *------------------------------------------------------------------------------
- */
 
 /* error msgs */
 const char *daa_errs[] =
@@ -110,21 +87,6 @@ const char *daa_errs[] =
 };
 
 /*
- *------------------------------------------------------------------------------
- * local function prototypes
- *------------------------------------------------------------------------------
- */
-
-/*
- *------------------------------------------------------------------------------
- * functions
- *------------------------------------------------------------------------------
- */
-
-
-
-/*
- *------------------------------------------------------------------------------
  * doff:
  *     data offset routine that calculates the offset in basic data
  *     units of the location of the data item specified by the
@@ -153,7 +115,6 @@ const char *daa_errs[] =
  *     int offset in basic data units from the start of the data area(base_ptr)
  *     to data item specified by dim_ind[].  byte offset is given by:
  *     doff(level, dim_ind, dim_prod, dp) * data_size.
- *------------------------------------------------------------------------------
  */
 
     static int
@@ -163,7 +124,7 @@ doff(
     int dim_prod,
     unsigned int *dp)
 {
-    if (level == 0)
+    if ( level == 0 )
     {
         return 0;
     }
@@ -175,9 +136,7 @@ doff(
 }
 
 
-
 /*
- *------------------------------------------------------------------------------
  * off:
  *     offset routine that calculates the offset in pointer units(char *)
  *     of the start of the pointer array for that level.  each level has a
@@ -195,7 +154,6 @@ doff(
  * Returns:
  *     int offset in pointer units(char *) of the pointer array for that level.
  *     byte offset is given by off(level, dp) * sizeof(char *).
- *------------------------------------------------------------------------------
  */
 
     static int
@@ -203,7 +161,7 @@ off(
     unsigned int level,
     unsigned int *dp)
 {
-    if (level == 0)
+    if ( level == 0 )
     {
         return 0;
     }
@@ -214,9 +172,7 @@ off(
 }
 
 
-
 /*
- *------------------------------------------------------------------------------
  * ptr_init:
  *     this routine uses the space pointed to by the "base_ptr" pointer.
  *     it constructs the several levels of pointers needed to reference
@@ -257,7 +213,6 @@ off(
  *
  * Returns:
  *     pointer to next level of indirection.
- *------------------------------------------------------------------------------
  */
 
     static char *
@@ -276,7 +231,6 @@ ptr_init(
     unsigned long	i;
 
 
-
     /*
      * if level is not final level get pointer to array of pointers
      * for that level and recursively call ptr_init() to return pointers to
@@ -284,7 +238,7 @@ ptr_init(
      * position of data and return pointer to level-1.
      */
 
-    if (level < (num_dim - 1))
+    if ( level < (num_dim - 1) )
     {
         /*
          * ptrs points to the start of a subarray of pointers to the
@@ -296,7 +250,7 @@ ptr_init(
             dp[level], dp) * sizeof(char *)));
 
         /* fill the array of pointers that ptrs points to */
-        for (i=0 ; i<dim[level] ; i++)
+        for ( i = 0 ; i < dim[level] ; i++ )
         {
             dim_ind[level] = i;
 
@@ -316,7 +270,7 @@ ptr_init(
          * of recursive tree call
          */
 
-        if (level == 0)
+        if ( level == 0 )
         {
             ptrs -= st[0];
         }
@@ -336,9 +290,7 @@ ptr_init(
 }
 
 
-
 /*
- *------------------------------------------------------------------------------
  * das:
  *     dynamic array size.  this routine takes four of the same arguments
  *     that daa() and daav() take and calculates the total heap allocation
@@ -362,7 +314,6 @@ ptr_init(
  *
  * Returns:
  *     size in bytes of dynamic array that daa() and daav() will use.
- *------------------------------------------------------------------------------
  */
 
     int
@@ -378,29 +329,28 @@ das(
     unsigned int dp[MAX_DIM];
 
 
-
-    if (num_dim < 1 || num_dim > MAX_DIM)
+    if ( num_dim < 1 || num_dim > MAX_DIM )
     {
         *err_code = ERRS_INV_DIMS;
         return -1;
     }
 
-    if (data_size < 1)
+    if ( data_size < 1 )
     {
         *err_code = ERRS_INV_REQ_SIZE;
         return -1;
     }
 
     dp[0] = dim[0];
-    for (i=0 ; i<num_dim ; i++)
+    for ( i = 0 ; i < num_dim ; i++ )
     {
-        if (dim[i] <= 0)
+        if ( dim[i] <= 0 )
         {
             *err_code = ERRS_INV_DIM;
             return -1;
         }
 
-        if (i > 0)
+        if ( i > 0 )
         {
             dp[i] = dp[i-1] * dim[i];
         }
@@ -411,9 +361,7 @@ das(
 }
 
 
-
 /*
- *------------------------------------------------------------------------------
  * daa:
  *     dynamic array allocation with memory allocated externally.
  *
@@ -461,7 +409,6 @@ das(
  *     errors.  this is not an array allocation error but an array usage error,
  *     similar to any array access on a static C zero based array outside the
  *     normal 0...n-1 bounds.
- *------------------------------------------------------------------------------
  */
 
     void *
@@ -474,29 +421,28 @@ daa(
     char *base_ptr,
     char *init_ptr)
 {
-    unsigned int		i, j;
+    unsigned int i, j;
 
     /* array of current dimension indices */
-    int		dim_ind[MAX_DIM];
+    int	dim_ind[MAX_DIM];
 
-    char	*p_data, /* pointer to array data */
-        	*p;      /* tmp pointer */
+    char *p_data, /* pointer to array data */
+         *p;      /* tmp pointer */
 
     /* product of dimensions from 0 to index, dim[0]*dim[1]...dim[index] */
-    unsigned int		dp[MAX_DIM];
+    unsigned int dp[MAX_DIM];
 
     /* points to base of pointers to pointers to ... to data */
-    char	*ptr_ptr;
+    char *ptr_ptr;
 
 
-
-    if (num_dim < 1 || num_dim > MAX_DIM)
+    if ( num_dim < 1 || num_dim > MAX_DIM )
     {
         *err_code = ERRS_INV_DIMS;
         return NULL;
     }
 
-    if (data_size < 1)
+    if ( data_size < 1 )
     {
         *err_code = ERRS_INV_REQ_SIZE;
         return NULL;
@@ -509,16 +455,16 @@ daa(
      */
 
     dp[0] = dim[0];
-    for (i=0 ; i<num_dim ; i++)
+    for ( i = 0 ; i < num_dim ; i++ )
     {
         dim_ind[i] = 0;
-        if (dim[i] <= 0)
+        if ( dim[i] <= 0 )
         {
             *err_code = ERRS_INV_DIM;
             return NULL;
         }
 
-        if (i > 0)
+        if ( i > 0 )
         {
             dp[i] = dp[i-1] * dim[i];
         }
@@ -530,25 +476,25 @@ daa(
      */
     ptr_ptr = base_ptr + dp[num_dim-1] * data_size;
 
-    for (i=0 ; i<sizeof(char *) ; i++, ++ptr_ptr)
+    for ( i = 0 ; i < sizeof(char *) ; i++, ++ptr_ptr )
     {
-        if (((unsigned long)ptr_ptr)%sizeof(char *) == 0)
+        if ( ((unsigned long)ptr_ptr)%sizeof(char *) == 0 )
         {
             break;
         }
     }
 
     /* if init_ptr is NULL skip initialization */
-    if (init_ptr != NULL)
+    if ( init_ptr != NULL )
     {
         /* set p_data to point to the start of the data area */
         p_data = base_ptr;
      
         /* initialize the array */
-        for (i=0 ; i<dp[num_dim-1] ; i++)
+        for ( i = 0 ; i < dp[num_dim-1] ; i++ )
         {
             p = init_ptr;
-            for (j=0 ; j<data_size ; j++)
+            for ( j = 0 ; j < data_size ; j++ )
             {
                 *p_data++ = *p++;
             }
@@ -561,9 +507,7 @@ daa(
 }
 
 
-
 /*
- *------------------------------------------------------------------------------
  * daav:
  *     dynamic array allocation with memory allocated by valloc().
  *
@@ -612,7 +556,6 @@ daa(
  *     errors.  this is not an array allocation error but an array usage error,
  *     similar to any array access on a static C zero based array outside the
  *     normal 0...n-1 bounds.
- *------------------------------------------------------------------------------
  */
 
     void *
@@ -625,32 +568,31 @@ daav(
     char **free_ptr,
     char *init_ptr)
 {
-    unsigned int		i, j;
+    unsigned int i, j;
 
     /* array of current dimension indices */
     int dim_ind[MAX_DIM];
 
-    char	*p_data, /* pointer to array data */
-        	*p;      /* tmp pointer */
+    char *p_data, /* pointer to array data */
+         *p;      /* tmp pointer */
 
     /* points to base of allocated array */
-    char	*base_ptr;
+    char *base_ptr;
 
     /* points to base of pointers to pointers to ... to data */
-    char	*ptr_ptr;
+    char *ptr_ptr;
 
     /* product of dimensions from 0 to index, dim[0]*dim[1]...dim[index] */
-    unsigned int		dp[MAX_DIM];
+    unsigned int dp[MAX_DIM];
 
 
-
-    if (num_dim < 1 || num_dim > MAX_DIM)
+    if ( num_dim < 1 || num_dim > MAX_DIM )
     {
         *err_code = ERRS_INV_DIMS;
         return NULL;
     }
 
-    if (data_size < 1)
+    if ( data_size < 1 )
     {
         *err_code = ERRS_INV_REQ_SIZE;
         return NULL;
@@ -663,16 +605,16 @@ daav(
      */
 
     dp[0] = dim[0];
-    for (i=0 ; i<num_dim ; i++)
+    for ( i = 0 ; i < num_dim ; i++ )
     {
         dim_ind[i] = 0;
-        if (dim[i] <= 0)
+        if ( dim[i] <= 0 )
         {
             *err_code = ERRS_INV_DIM;
             return NULL;
         }
 
-        if (i > 0)
+        if ( i > 0 )
         {
             dp[i] = dp[i-1] * dim[i];
         }
@@ -685,8 +627,8 @@ daav(
      * area on pointer alignment boundary.
      */
 
-    if ((base_ptr = (char *) valloc(dp[num_dim-1] * data_size +
-           off(num_dim-1, dp) * sizeof(char *) + sizeof(char *))) == NULL)
+    if ( (base_ptr = (char *) valloc(dp[num_dim-1] * data_size +
+           off(num_dim-1, dp) * sizeof(char *) + sizeof(char *))) == NULL )
     {
         *err_code = ERRS_FAIL_ALLOC;
         return NULL;
@@ -698,9 +640,9 @@ daav(
      */
     ptr_ptr = base_ptr + dp[num_dim-1] * data_size;
 
-    for (i=0 ; i<sizeof(char *) ; i++, ++ptr_ptr)
+    for ( i = 0 ; i < sizeof(char *) ; i++, ++ptr_ptr )
     {
-        if (((unsigned long)ptr_ptr)%sizeof(char *) == 0)
+        if ( ((unsigned long)ptr_ptr)%sizeof(char *) == 0 )
         {
             break;
         }
@@ -710,16 +652,16 @@ daav(
     *free_ptr = base_ptr;
 
     /* if init_ptr is NULL skip initialization */
-    if (init_ptr != NULL)
+    if ( init_ptr != NULL )
     {
         /* set p_data to point to the start of the data area */
         p_data = base_ptr;
      
         /* initialize the array */
-        for (i=0 ; i<dp[num_dim-1] ; i++)
+        for ( i = 0 ; i < dp[num_dim-1] ; i++ )
         {
             p = init_ptr;
-            for (j=0 ; j<data_size ; j++)
+            for ( j = 0 ; j < data_size ; j++ )
             {
                 *p_data++ = *p++;
             }
