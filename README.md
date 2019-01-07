@@ -3,35 +3,29 @@
 daa
 ===
 
-Dynamic Array Allocator - C/C++
-  - ptr to ptr to ... style arbitrary N dimensional, implemented by a recursive routine(ptr_init()) which calls
-    two other different recursive routines(off() and doff())
+Dynamic Array Allocator - C++
+  
+  - ptr to ptr to ... style arbitrary N dimensional array allocator of anything you can take sizeof()
   - arbitrary starting subscript(0, 1, -10, ...) for each separate dimension
-  - allocates anything of any type(double, int, long, struct, ...) that you can take sizeof() on
-  - one contiguous block allocation of memory for all ptr's and data(locality of reference and easy free())
-  - array or slices of array can be passed to subroutines to any depth, modifed there, and be seen at all levels
+  - allocates anything of any type(double, int, long, struct, ...)
+  - one contiguous block allocation of memory for all ptr's and data(locality of
+    reference and easy free())
+  - array or slices of array can be passed to subroutines to any depth, modifed there,
+    and be seen at all levels
   - initialization pointer argument set to instance of initialized type or NULL for no initialization
+  - implemented by a recursive routine(ptr_init()) which calls two other different recursive
+    routines(off() and doff())
   - see article in Embedded Systems Programming, Dec. 2000, "Flexible Dynamic Array Allocation"(included)
   - see article in The C Users Journal, Nov. 1990. "A Flexible Dynamic Array Allocator"(included)
-  - 16 verification tests that show complex code usage examples, for C see daac_test.c and for C++ see daacpp_test.cpp
-
+  - 16 verification tests that show complex code usage examples, see daa_test.cpp
 
 Files:
 
-    daa.h - declaration header file for both daa.c and daa.cpp
+    daa.hpp - header file for daa.cpp
+    daa.cpp - C++ implementation
 
-    c directory:
-        daac.mk         - build script, builds static and dynamic libraries.
-                            builds and executes test program.
-        daa.c           - ANSI C implementation
-        daac_test.c     - daa.c test program
-
-    cpp directory:
-        daacpp.mk       - build script, builds static and dynamic libraries.
-                            builds and executes test program.
-        daa.cpp         - ANSI C++ implementation
-        daacpp_test.cpp - daa.cpp test program
-
+    daa.mk  - build script - builds static and dynamic libraries and executes test program.
+    daa_test.cpp - test program
 
 API:
 
