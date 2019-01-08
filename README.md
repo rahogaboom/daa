@@ -18,20 +18,90 @@ Dynamic Array Allocator - C++
   - see article in Embedded Systems Programming, Dec. 2000, "Flexible Dynamic Array Allocation"(included)
   - see article in The C Users Journal, Nov. 1990. "A Flexible Dynamic Array Allocator"(included)
   - 16 verification tests that show code usage examples, see daa_test.cpp
-  - see API(das(), daa(), daav()) section and cut/paste EXAMPLES section below
+  - see API(das(), daa(), daav()) section and cut/paste Examples section below
   - a daa-compile.tar file is provided with a non-header compiled(clang, clang++, gcc, g++) version
   - for an excellent reference on this type of array(ptr to ptr to ...) access see Numerical Recipes
     in C, Press, Flannery, Teukolsky, and Vettering, Cambridge University Press, 1992, pg. 20.
   - this file is the entire documentation needed to use the library
 
+Common Usage:
+    a. das()/valloc()/daa() - find size necessary then allocate memory then populate allocated memory
+    b. daav()               - all in one(uses valloc())
+
 Files:
 
     daa.hpp - header only C++ implementation
     daa.mk  - build script, compiles/executes test code
-    daa_test.cpp - test program
+    daa_test.cpp - test code
     daa-compile.tar - non-header compiled(clang, clang++, gcc, g++) version
 
 API:
+
+/*
+ *==================================================================================================
+ * File: daa.hpp
+ *
+ *     Based on Dec. 2000 Embedded Systems Design article "Flexible Dynamic
+ *     Array Allocation" by Richard A Hogaboom
+ *
+ * Description:
+ *     these dynamic array allocators - daa() and daav() - are designed
+ *     to be efficient and flexible.  daa() takes as argument a pointer
+ *     to the space that the caller allocates.  the size of this space is
+ *     determined by a previous call to das().  the usual sequence would
+ *     be das()/valloc()/daa().  daav() takes as argument a pointer to
+ *     pointer that daav() returns the pointer to the valloc()'ed space in.
+ *     they can allocate arrays of up to MAX_DIM dimensions of any type that
+ *     will return a size with the sizeof() C operator.  they are also very
+ *     efficient from the point of view of array access.  for daav() the
+ *     single valloc() ensures locality of reference that eliminates excess
+ *     paging encountered with dynamic array allocation schemes that use
+ *     multiple valloc()'s.  arrays of structure, enum or union type can
+ *     be allocated.  a corresponding free of the allocated area must
+ *     normally be done (unless you want to allocate to program termination).
+ *     for daav() the sixth parameter returns the free pointer; daa() does
+ *     not require a free pointer since the caller allocates the space.
+ *     do not free on the function return pointer since array storage begins
+ *     with the data and is followed by pointers to pointers to ..., and the
+ *     first element(lowest subscript of each dimension), does not point to
+ *     the beginning of allocated space.  the array is initialized to the
+ *     value pointed to by the last parameter, or not initialized if NULL.
+ *     the last parameter init pointer should point to something with a size
+ *     the same as the size of the type in the sizeof() first argument.
+ *     arrays may be allocated to have one or more dimensions with non-zero
+ *     integer(+ or -) start subscripts.  thus, arrays may be one based or
+ *     zero based or minus one based or any based for that matter.
+ *
+ * Examples:
+ *     see daa_test.cpp
+ *
+ * Author:
+ *    Richard Hogaboom
+ *    richard.hogaboom@gmail.com
+ *
+ *==================================================================================================
+ */
+
+/*
+ * Notes:
+ *     1. the dimensional limit of the allocated arrays is set by MAX_DIM;
+ *        increase or decrease this to adjust the maximum array dimension.
+ *
+ *     2. alignment of the data area is the alignment of the first argument
+ *        sizeof(), while the alignment of the pointer area is sizeof(char *).
+ *        the data comes first, and the assumption here is that the valloc()
+ *        (for daav()) and whatever allocation routine is used between das()
+ *        and daa() will align at the most stringent boundary, thus
+ *        accommodating the data area alignment.  the pointer area comes
+ *        second and may, depending on the total size of the data area need
+ *        to be aligned on a sizeof(char *) boundary.  the beginning of the
+ *        pointer area is tested for alignment, and its alignment adjusted if
+ *        necessary.
+ *
+ *     3. for an excellent reference on this type of array access see Numerical
+ *        Recipes in C, Press, Flannery, Teukolsky, and Vettering, Cambridge
+ *        University Press, 1992, pg. 20.
+ */
 
 /*
  *------------------------------------------------------------------------------
@@ -195,11 +265,8 @@ daav(
     char **free_ptr,
     char *init_ptr)
 
-Common Usage:
-    a. das()/valloc()/daa() - find size necessary then allocate memory then populate allocated memory
-    b. daav()               - all in one(uses valloc())
-
-EXAMPLES:
+Examples:
 
 
 ```
+
