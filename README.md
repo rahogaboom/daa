@@ -18,11 +18,12 @@ Dynamic Array Allocator - C++
   - see article in Embedded Systems Programming, Dec. 2000, "Flexible Dynamic Array Allocation"(included)
   - see article in The C Users Journal, Nov. 1990. "A Flexible Dynamic Array Allocator"(included)
   - 16 verification tests that show code usage examples, see daa_test.cpp
-  - see API(das(), daa(), daav()) section and cut/paste Examples section below
+  - see cut/paste Examples section and API(das(), daa(), daav()) section below
   - a daa-compile.tar file is provided with a non-header compiled(clang, clang++, gcc, g++) version
   - for an excellent reference on this type of array(ptr to ptr to ...) access see Numerical Recipes
     in C, Press, Flannery, Teukolsky, and Vettering, Cambridge University Press, 1992, pg. 20.
   - this file is the entire documentation needed to use the library
+  - Author: Richard Hogaboom, richard.hogaboom@gmail.com
 
 Common Usage:
     a. das()/valloc()/daa() - find size necessary then allocate memory then populate allocated memory
@@ -34,6 +35,9 @@ Files:
     daa.mk  - build script, compiles/executes test code
     daa_test.cpp - test code
     daa-compile.tar - non-header compiled(clang, clang++, gcc, g++) version
+
+Examples:
+
 
 API:
 
@@ -264,9 +268,6 @@ daav(
     int *err_code,
     char **free_ptr,
     char *init_ptr)
-
-Examples:
-
 
 ```
 

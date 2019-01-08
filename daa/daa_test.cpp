@@ -8,11 +8,18 @@
 /*
  * test code for daa(), daav(), and das().  all the tests are completely
  * independent, that is, any test may be eliminated or moved elsewhere and
- * run independently.
+ * run independently.  cut/paste tests into your code and modify as needed.
+ * to run all tests using daa() for allocation set test = 0.
+ * to run all tests using daav() for allocation set test = 1.
+ */
+
+/*
+ * initializes four dimensional array[][][][] to integer values which are
+ * the sum of the dimension subscripts
  */
 
     void
-test1(
+init4darray(
     unsigned int d[4],
     int st[4],
     double ****array)
@@ -39,20 +46,23 @@ test1(
    int
 main()
 {
-    /* to test daa() set test=0; to test daav() set test=1 */
-    int test = 0;
+    /*
+     * to run all tests using daa() for allocation set test = 0.
+     * to run all tests using daav() for allocation set test = 1.
+     */
+    int test = 1;
 
 
     /*
      * TEST 1
-     *    4 dimensional double array with subroutine call(daav())
-     *    modification of array.
+     *    4 dimensional double array
      */
     {
         int i, j, k, l;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[4] = {3, 5, 4, 2};
         int st[4] = {-1, -5, 10, 0};
         double ****array = NULL;
@@ -81,7 +91,7 @@ main()
         }
         else
         {
-            test1(d, st, array);
+            init4darray(d, st, array);
 
             fprintf(stderr, "sizeof(double) = %ld\n", sizeof(double));
             fprintf(stderr, "array size = %d\n", asize);
@@ -108,14 +118,14 @@ main()
 
     /*
      * TEST 2
-     *    4 dimensional double array with subroutine call(daa())
-     *    modification of array.
+     *    4 dimensional double array
      */
     {
         int i, j, k, l;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[4] = {3, 5, 4, 2};
         int st[4] = {-1, -5, 10, 0};
         double init = 123.;
@@ -145,7 +155,7 @@ main()
         }
         else
         {
-            test1(d, st, array);
+            init4darray(d, st, array);
 
             fprintf(stderr, "sizeof(double) = %ld\n", sizeof(double));
             fprintf(stderr, "array size = %d\n", asize);
@@ -171,13 +181,14 @@ main()
 
     /*
      * TEST 3
-     *    1 dimensional double array.
+     *    1 dimensional double array
      */
     {
         int i;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[1] = {10};
         int st[1] = {1};
         double init = 10.10;
@@ -222,7 +233,7 @@ main()
 
     /*
      * TEST 4
-     *    10 dimensional double array.
+     *    10 dimensional double array
      *
      * Note:
      *    this is by far the largest allocation test.  only the first and
@@ -235,6 +246,7 @@ main()
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[10] = {3, 3, 2, 4, 5, 4, 4, 4, 4, 4};
         int st[10] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5};
         double data;
@@ -312,13 +324,14 @@ main()
 
     /*
      * TEST 5
-     *    1 dimensional array of struct.
+     *    1 dimensional array of struct
      */
     {
         int i;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[1] = {10};
         int st[1] = {1};
         struct s {
@@ -369,13 +382,14 @@ main()
 
     /*
      * TEST 6
-     *    2 dimensional array of struct.
+     *    2 dimensional array of struct
      */
     {
         int i, j;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[2] = {5, 5};
         int st[2] = {0, 0};
         struct s {
@@ -430,13 +444,14 @@ main()
 
     /*
      * TEST 7
-     *    3 dimensional array of struct.
+     *    3 dimensional array of struct
      */
     {
         int i, j, k;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[3] = {2, 5, 6};
         int st[3] = {0, 0, 0};
         struct s {
@@ -497,12 +512,13 @@ main()
 
     /*
      * TEST 8
-     *    3 dimensional array of struct.
+     *    3 dimensional array of struct
      */
     {
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[3] = {1, 2, 3};
         int st[3] = {-1, -1, -1};
         struct s {
@@ -556,13 +572,14 @@ main()
 
     /*
      * TEST 9
-     *    1 dimensional int array.
+     *    1 dimensional int array
      */
     {
         int i;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[1] = {10};
         int st[1] = {1};
         int init = 12;
@@ -607,13 +624,14 @@ main()
 
     /*
      * TEST 10
-     *    2 dimensional int array.
+     *    2 dimensional int array
      */
     {
         int i, j;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[2] = {2, 2};
         int st[2] = {-20, 20};
         int data;
@@ -670,13 +688,14 @@ main()
 
     /*
      * TEST 11
-     *    3 dimensional int array.
+     *    3 dimensional int array
      */
     {
         int i, j, k;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[3] = {3, 3, 3};
         int st[3] = {-10, -20, -30};
         int data;
@@ -739,12 +758,13 @@ main()
 
     /*
      * TEST 12
-     *    3 dimensional union array.
+     *    3 dimensional union array
      */
     {
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[3] = {2, 5, 6};
         int st[3] = {0, 0, 0};
         union s {
@@ -793,12 +813,13 @@ main()
 
     /*
      * TEST 13
-     *    3 dimensional enum array.
+     *    3 dimensional enum array
      */
     {
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[3] = {2, 5, 6};
         int st[3] = {0, 0, 0};
         enum e {a,b,c} ***array = NULL, e_init = {c};
@@ -844,13 +865,14 @@ main()
 
     /*
      * TEST 14
-     *    2 dimensional short array.
+     *    2 dimensional short array
      */
     {
         int i, j;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[2] = {15, 5};
         int st[2] = {-1, -1};
         short init = 11;
@@ -899,13 +921,14 @@ main()
 
     /*
      * TEST 15
-     *    2 dimensional unsigned short array.
+     *    2 dimensional unsigned short array
      */
     {
         int i, j;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[2] = {4, 5};
         int st[2] = {0, 1};
         unsigned short init = 13;
@@ -955,13 +978,14 @@ main()
 
     /*
      * TEST 16
-     *    1 dimensional array of 3 four meg char strings.
+     *    1 dimensional array of 3 four meg char strings
      */
     {
         int i;
         int err_code = 0;
         int asize = 0;
         char *free_ptr;
+
         unsigned int d[1] = {3};
         int st[1] = {0};
 
