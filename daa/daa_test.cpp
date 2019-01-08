@@ -63,9 +63,9 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[4] = {3, 5, 4, 2};
-        int st[4] = {-1, -5, 10, 0};
-        double ****array = NULL;
+        unsigned int d[4] = {3, 5, 4, 2}; /* dimension */
+        int st[4] = {-1, -5, 10, 0}; /* start subscript */
+        double ****array = NULL; /* array pointer */
 
         fprintf(stderr, "\nTEST 1\n");
 
@@ -126,10 +126,10 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[4] = {3, 5, 4, 2};
-        int st[4] = {-1, -5, 10, 0};
+        unsigned int d[4] = {3, 5, 4, 2}; /* dimension */
+        int st[4] = {-1, -5, 10, 0}; /* start subscript */
         double init = 123.;
-        double ****array = NULL;
+        double ****array = NULL; /* array pointer */
 
         fprintf(stderr, "\nTEST 2\n");
 
@@ -189,10 +189,10 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[1] = {10};
-        int st[1] = {1};
+        unsigned int d[1] = {10}; /* dimension */
+        int st[1] = {1}; /* start subscript */
         double init = 10.10;
-        double *array = NULL;
+        double *array = NULL; /* array pointer */
 
         fprintf(stderr, "\nTEST 3\n");
 
@@ -247,11 +247,11 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[10] = {3, 3, 2, 4, 5, 4, 4, 4, 4, 4};
-        int st[10] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5};
+        unsigned int d[10] = {3, 3, 2, 4, 5, 4, 4, 4, 4, 4}; /* dimension */
+        int st[10] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5}; /* start subscript */
         double data;
         double init = 0;
-        double **********array = NULL;
+        double **********array = NULL; /* array pointer */
 
         fprintf(stderr, "\nTEST 4\n");
 
@@ -332,12 +332,12 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[1] = {10};
-        int st[1] = {1};
+        unsigned int d[1] = {10}; /* dimension */
+        int st[1] = {1}; /* start subscript */
         struct s {
             double d;
             int l;
-        } *array = NULL, s_init = {1.25, 5};
+        } *array = NULL, s_init = {1.25, 5}; /* array pointer */
 
         fprintf(stderr, "\nTEST 5\n");
 
@@ -390,12 +390,12 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[2] = {5, 5};
-        int st[2] = {0, 0};
+        unsigned int d[2] = {5, 5}; /* dimension */
+        int st[2] = {0, 0}; /* start subscript */
         struct s {
             double d;
             int l;
-        } **array = NULL, s_init = {1, 5};
+        } **array = NULL, s_init = {1, 5}; /* array pointer */
 
         fprintf(stderr, "\nTEST 6\n");
 
@@ -452,13 +452,13 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[3] = {2, 5, 6};
-        int st[3] = {0, 0, 0};
+        unsigned int d[3] = {2, 5, 6}; /* dimension */
+        int st[3] = {0, 0, 0}; /* start subscript */
         struct s {
             char c;
             int l;
             double d;
-        } ***array = NULL, s_init = {0, 1, 10};
+        } ***array = NULL, s_init = {0, 1, 10}; /* array pointer */
 
         fprintf(stderr, "\nTEST 7\n");
 
@@ -519,13 +519,13 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[3] = {1, 2, 3};
-        int st[3] = {-1, -1, -1};
+        unsigned int d[3] = {1, 2, 3}; /* dimension */
+        int st[3] = {-1, -1, -1}; /* start subscript */
         struct s {
             double d;
             int l;
             char c;
-        } ***array = NULL, s_init = {1, 10, 0};
+        } ***array = NULL, s_init = {1, 10, 0}; /* array pointer */
 
         fprintf(stderr, "\nTEST 8\n");
 
@@ -580,10 +580,10 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[1] = {10};
-        int st[1] = {1};
+        unsigned int d[1] = {10}; /* dimension */
+        int st[1] = {1}; /* start subscript */
         int init = 12;
-        int *array = NULL;
+        int *array = NULL; /* array pointer */
 
         fprintf(stderr, "\nTEST 9\n");
 
@@ -632,11 +632,11 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[2] = {2, 2};
-        int st[2] = {-20, 20};
+        unsigned int d[2] = {2, 2}; /* dimension */
+        int st[2] = {-20, 20}; /* start subscript */
         int data;
         int init = 0;
-        int **array = NULL;
+        int **array = NULL; /* array pointer */
 
         fprintf(stderr, "\nTEST 10\n");
 
@@ -696,11 +696,11 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[3] = {3, 3, 3};
-        int st[3] = {-10, -20, -30};
+        unsigned int d[3] = {3, 3, 3}; /* dimension */
+        int st[3] = {-10, -20, -30}; /* start subscript */
         int data;
         int init = 2;
-        int ***array = NULL;
+        int ***array = NULL; /* array pointer */
 
         fprintf(stderr, "\nTEST 11\n");
 
@@ -765,12 +765,12 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[3] = {2, 5, 6};
-        int st[3] = {0, 0, 0};
+        unsigned int d[3] = {2, 5, 6}; /* dimension */
+        int st[3] = {0, 0, 0}; /* start subscript */
         union s {
             int l;
             double d;
-        } ***array = NULL, s_init = {5};
+        } ***array = NULL, s_init = {5}; /* array pointer */
 
         fprintf(stderr, "\nTEST 12\n");
 
@@ -820,9 +820,9 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[3] = {2, 5, 6};
-        int st[3] = {0, 0, 0};
-        enum e {a,b,c} ***array = NULL, e_init = {c};
+        unsigned int d[3] = {2, 5, 6}; /* dimension */
+        int st[3] = {0, 0, 0}; /* start subscript */
+        enum e {a,b,c} ***array = NULL, e_init = {c}; /* array pointer */
 
         fprintf(stderr, "\nTEST 13\n");
 
@@ -873,10 +873,10 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[2] = {15, 5};
-        int st[2] = {-1, -1};
+        unsigned int d[2] = {15, 5}; /* dimension */
+        int st[2] = {-1, -1}; /* start subscript */
         short init = 11;
-        short **array = NULL;
+        short **array = NULL; /* array pointer */
 
         fprintf(stderr, "\nTEST 14\n");
 
@@ -929,10 +929,10 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[2] = {4, 5};
-        int st[2] = {0, 1};
+        unsigned int d[2] = {4, 5}; /* dimension */
+        int st[2] = {0, 1}; /* start subscript */
         unsigned short init = 13;
-        unsigned short **array = NULL;
+        unsigned short **array = NULL; /* array pointer */
 
         fprintf(stderr, "\nTEST 15\n");
 
@@ -986,8 +986,8 @@ main()
         int asize = 0;
         char *free_ptr;
 
-        unsigned int d[1] = {3};
-        int st[1] = {0};
+        unsigned int d[1] = {3}; /* dimension */
+        int st[1] = {0}; /* start subscript */
 
         #define FOUR_MEGS (4*1024*1024)
 
@@ -997,7 +997,7 @@ main()
 	        unsigned char s[FOUR_MEGS];
 	    } STRING_FOUR_MEGS;
 
-        STRING_FOUR_MEGS *array = NULL;
+        STRING_FOUR_MEGS *array = NULL; /* array pointer */
 
 
 

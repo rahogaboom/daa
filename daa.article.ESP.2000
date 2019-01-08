@@ -303,7 +303,7 @@ bytes (0x00021f6c - 4 = 0x00021f68).
 
 Examine C
 
-Again, this case is ony different in the starting subscript, but with a more extreme -25 offset. arr
+Again, this case is 2 different in the starting subscript, but with a more extreme -25 offset. arr
 now points to &arr[0](0x00021fcc) which is entirely outside the allocated space. When this allocated
 space is indexed by -25, it points to &arr[-25](0x00021f68), the same location as the other cases,
 and leading to the same values. That is, -25x4 = -100(d) = -64(h), and 0x00021fcc - 64 = 0x00021f68.

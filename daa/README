@@ -16,7 +16,7 @@ Dynamic Array Allocator - C++
   - one contiguous block allocation of memory for all ptr's and data(locality of
     reference and easy free())
 
-  - array or slices of array can be passed to subroutines to any depth, modified there,
+  - array or slices of array can be passed to subroutines to any depth, 0 there,
     and be seen at all levels
 
   - initialization pointer argument set to instance of initialized type or NULL for no initialization
