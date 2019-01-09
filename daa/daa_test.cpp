@@ -6,11 +6,9 @@
 #include "daa.hpp"
 
 /*
- * test code for daa(), daav(), and das().  all the tests are completely
- * independent, that is, any test may be eliminated or moved elsewhere and
- * run independently.  cut/paste tests into your code and modify as needed.
- * to run all tests using daa() for allocation set test = 0.
- * to run all tests using daav() for allocation set test = 1.
+ * test code for das()/daa().  all the tests are completely independent,
+ * that is, any test may be eliminated or moved elsewhere and run
+ * independently.  cut/paste tests into your code and modify as needed.
  */
 
 /*
@@ -47,13 +45,6 @@ init4darray(
 main()
 {
     /*
-     * to run all tests using daa() for allocation set test = 0.
-     * to run all tests using daav() for allocation set test = 1.
-     */
-    int test = 1;
-
-
-    /*
      * TEST 1
      *    4 dimensional double array
      */
@@ -61,7 +52,7 @@ main()
         int i, j, k, l;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[4] = {3, 5, 4, 2}; /* dimension */
         int st[4] = {-1, -5, 10, 0}; /* start subscript */
@@ -71,18 +62,9 @@ main()
 
         asize = das(sizeof(double), 4, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (double ****) daa(sizeof(double), 4, d, st,
-                &err_code, free_ptr, NULL);
-        }
-        else if (test == 1)
-        {
-            array = (double ****) daav(sizeof(double), 4, d, st,
-                &err_code, &free_ptr, NULL);
-        }
+        array = (double ****) daa(sizeof(double), 4, d, st, &err_code, mem_ptr, NULL);
 
         if (array == NULL)
         {
@@ -112,7 +94,7 @@ main()
             }
 
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -124,7 +106,7 @@ main()
         int i, j, k, l;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[4] = {3, 5, 4, 2}; /* dimension */
         int st[4] = {-1, -5, 10, 0}; /* start subscript */
@@ -135,18 +117,9 @@ main()
 
         asize = das(sizeof(double), 4, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (double ****) daa(sizeof(double), 4, d, st,
-                &err_code, free_ptr, (char *)&init);
-        }
-        else if (test == 1)
-        {
-            array = (double ****) daav(sizeof(double), 4, d, st,
-                &err_code, &free_ptr, (char *)&init);
-        }
+        array = (double ****) daa(sizeof(double), 4, d, st, &err_code, mem_ptr, (char *)&init);
 
         if (array == NULL)
         {
@@ -175,7 +148,7 @@ main()
                 }
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -187,7 +160,7 @@ main()
         int i;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[1] = {10}; /* dimension */
         int st[1] = {1}; /* start subscript */
@@ -198,18 +171,9 @@ main()
 
         asize = das(sizeof(double), 1, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (double *) daa(sizeof(double), 1, d, st,
-               &err_code, free_ptr, (char *)&init);
-        }
-        else if (test == 1)
-        {
-            array = (double *) daav(sizeof(double), 1, d, st,
-               &err_code, &free_ptr, (char *)&init);
-        }
+        array = (double *) daa(sizeof(double), 1, d, st, &err_code, mem_ptr, (char *)&init);
 
         if (array == NULL)
         {
@@ -227,7 +191,7 @@ main()
                 fprintf(stderr, "array[%2d] = %e\n", i, array[i]);
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -245,7 +209,7 @@ main()
         int i0, i1, i2, i3, i4, i5, i6, i7, i8, i9;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[10] = {3, 3, 2, 4, 5, 4, 4, 4, 4, 4}; /* dimension */
         int st[10] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5}; /* start subscript */
@@ -257,18 +221,9 @@ main()
 
         asize = das(sizeof(double), 10, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (double **********) daa(sizeof(double), 10, d, st,
-                &err_code, free_ptr, (char *)&init);
-        }
-        else if (test == 1)
-        {
-            array = (double **********) daav(sizeof(double), 10, d, st,
-                &err_code, &free_ptr, (char *)&init);
-        }
+        array = (double **********) daa(sizeof(double), 10, d, st, &err_code, mem_ptr, (char *)&init);
 
         if (array == NULL)
         {
@@ -318,7 +273,7 @@ main()
             fprintf(stderr, "array[-2][-1][-1][2][4][4][5][6][7][8] = %e\n"
                 , array[-2][-1][-1][2][4][4][5][6][7][8]);
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -330,7 +285,7 @@ main()
         int i;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[1] = {10}; /* dimension */
         int st[1] = {1}; /* start subscript */
@@ -343,18 +298,9 @@ main()
 
         asize = das(sizeof(struct s), 1, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (struct s *) daa(sizeof(struct s), 1, d, st,
-                &err_code, free_ptr, (char *)&s_init);
-        }
-        else if (test == 1)
-        {
-            array = (struct s *) daav(sizeof(struct s), 1, d, st,
-                &err_code, &free_ptr, (char *)&s_init);
-        }
+        array = (struct s *) daa(sizeof(struct s), 1, d, st, &err_code, mem_ptr, (char *)&s_init);
 
         if (array == NULL)
         {
@@ -376,7 +322,7 @@ main()
                 fprintf(stderr, "array[%2d].l = %2d\n", i, array[i].l);
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -388,7 +334,7 @@ main()
         int i, j;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[2] = {5, 5}; /* dimension */
         int st[2] = {0, 0}; /* start subscript */
@@ -401,18 +347,9 @@ main()
 
         asize = das(sizeof(struct s), 2, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (struct s **) daa(sizeof(struct s), 2, d, st,
-                &err_code, free_ptr, (char *)&s_init);
-        }
-        else if (test == 1)
-        {
-            array = (struct s **) daav(sizeof(struct s), 2, d, st,
-                &err_code, &free_ptr, (char *)&s_init);
-        }
+        array = (struct s **) daa(sizeof(struct s), 2, d, st, &err_code, mem_ptr, (char *)&s_init);
 
         if (array == NULL)
         {
@@ -438,7 +375,7 @@ main()
                 }
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -450,7 +387,7 @@ main()
         int i, j, k;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[3] = {2, 5, 6}; /* dimension */
         int st[3] = {0, 0, 0}; /* start subscript */
@@ -464,18 +401,9 @@ main()
 
         asize = das(sizeof(struct s), 3, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (struct s ***) daa(sizeof(struct s), 3, d, st,
-                &err_code, free_ptr, (char *)&s_init);
-        }
-        else if (test == 1)
-        {
-            array = (struct s ***) daav(sizeof(struct s), 3, d, st,
-                &err_code, &free_ptr, (char *)&s_init);
-        }
+        array = (struct s ***) daa(sizeof(struct s), 3, d, st, &err_code, mem_ptr, (char *)&s_init);
 
         if (array == NULL)
         {
@@ -506,7 +434,7 @@ main()
                 }
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -517,7 +445,7 @@ main()
     {
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[3] = {1, 2, 3}; /* dimension */
         int st[3] = {-1, -1, -1}; /* start subscript */
@@ -531,18 +459,9 @@ main()
 
         asize = das(sizeof(struct s), 3, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (struct s ***) daa(sizeof(struct s), 3, d, st,
-                &err_code, free_ptr, (char *)&s_init);
-        }
-        else if (test == 1)
-        {
-            array = (struct s ***) daav(sizeof(struct s), 3, d, st,
-                &err_code, &free_ptr, (char *)&s_init);
-        }
+        array = (struct s ***) daa(sizeof(struct s), 3, d, st, &err_code, mem_ptr, (char *)&s_init);
 
         if (array == NULL)
         {
@@ -566,7 +485,7 @@ main()
                             " array[-1][0][1].c = %d\n",
                array[-1][0][1].l, array[-1][0][1].d, array[-1][0][1].c);
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -578,7 +497,7 @@ main()
         int i;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[1] = {10}; /* dimension */
         int st[1] = {1}; /* start subscript */
@@ -589,18 +508,9 @@ main()
 
         asize = das(sizeof(int), 1, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (int *) daa(sizeof(int), 1, d, st,
-                &err_code, free_ptr, (char *)&init);
-        }
-        else if (test == 1)
-        {
-            array = (int *) daav(sizeof(int), 1, d, st,
-                &err_code, &free_ptr, (char *)&init);
-        }
+        array = (int *) daa(sizeof(int), 1, d, st, &err_code, mem_ptr, (char *)&init);
 
         if (array == NULL)
         {
@@ -618,7 +528,7 @@ main()
                 fprintf(stderr, "array[%2d] = %d\n", i, array[i]);
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -630,7 +540,7 @@ main()
         int i, j;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[2] = {2, 2}; /* dimension */
         int st[2] = {-20, 20}; /* start subscript */
@@ -642,18 +552,9 @@ main()
 
         asize = das(sizeof(int), 2, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (int **) daa(sizeof(int), 2, d, st,
-                &err_code, free_ptr, (char *)&init);
-        }
-        else if (test == 1)
-        {
-            array = (int **) daav(sizeof(int), 2, d, st,
-                &err_code, &free_ptr, (char *)&init);
-        }
+        array = (int **) daa(sizeof(int), 2, d, st, &err_code, mem_ptr, (char *)&init);
 
         if (array == NULL)
         {
@@ -682,7 +583,7 @@ main()
                 }    
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -694,7 +595,7 @@ main()
         int i, j, k;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[3] = {3, 3, 3}; /* dimension */
         int st[3] = {-10, -20, -30}; /* start subscript */
@@ -706,18 +607,9 @@ main()
 
         asize = das(sizeof(int), 3, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (int ***) daa(sizeof(int), 3, d, st,
-                &err_code, free_ptr, (char *)&init);
-        }
-        else if (test == 1)
-        {
-            array = (int ***) daav(sizeof(int), 3, d, st,
-                &err_code, &free_ptr, (char *)&init);
-        }
+        array = (int ***) daa(sizeof(int), 3, d, st, &err_code, mem_ptr, (char *)&init);
 
         if (array == NULL)
         {
@@ -752,7 +644,7 @@ main()
                 }    
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -763,7 +655,7 @@ main()
     {
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[3] = {2, 5, 6}; /* dimension */
         int st[3] = {0, 0, 0}; /* start subscript */
@@ -776,18 +668,9 @@ main()
 
         asize = das(sizeof(union s), 3, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (union s ***) daa(sizeof(union s), 3, d, st,
-                &err_code, free_ptr, (char *)&s_init);
-        }
-        else if (test == 1)
-        {
-            array = (union s ***) daav(sizeof(union s), 3, d, st,
-                &err_code, &free_ptr, (char *)&s_init);
-        }
+        array = (union s ***) daa(sizeof(union s), 3, d, st, &err_code, mem_ptr, (char *)&s_init);
 
         if (array == NULL)
         {
@@ -807,7 +690,7 @@ main()
             array[1][4][5].d = 7.5;
             fprintf(stderr, "array[1][4][5].d = %e\n", array[1][4][5].d);
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -818,7 +701,7 @@ main()
     {
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[3] = {2, 5, 6}; /* dimension */
         int st[3] = {0, 0, 0}; /* start subscript */
@@ -828,18 +711,9 @@ main()
 
         asize = das(sizeof(enum e), 3, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (enum e ***) daa(sizeof(enum e), 3, d, st,
-                &err_code, free_ptr, (char *)&e_init);
-        }
-        else if (test == 1)
-        {
-            array = (enum e ***) daav(sizeof(enum e), 3, d, st,
-                &err_code, &free_ptr, (char *)&e_init);
-        }
+        array = (enum e ***) daa(sizeof(enum e), 3, d, st, &err_code, mem_ptr, (char *)&e_init);
 
         if (array == NULL)
         {
@@ -859,7 +733,7 @@ main()
             array[1][4][5] = b;
             fprintf(stderr, "array[1][4][5] = %d\n", array[1][4][5]);
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -871,7 +745,7 @@ main()
         int i, j;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[2] = {15, 5}; /* dimension */
         int st[2] = {-1, -1}; /* start subscript */
@@ -882,18 +756,9 @@ main()
 
         asize = das(sizeof(short), 2, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (short **) daa(sizeof(short), 2, d, st,
-                &err_code, free_ptr, (char *)&init);
-        }
-        else if (test == 1)
-        {
-            array = (short **) daav(sizeof(short), 2, d, st,
-                &err_code, &free_ptr, (char *)&init);
-        }
+        array = (short **) daa(sizeof(short), 2, d, st, &err_code, mem_ptr, (char *)&init);
 
         if (array == NULL)
         {
@@ -915,7 +780,7 @@ main()
                 }
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -927,7 +792,7 @@ main()
         int i, j;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[2] = {4, 5}; /* dimension */
         int st[2] = {0, 1}; /* start subscript */
@@ -938,18 +803,9 @@ main()
 
         asize = das(sizeof(unsigned short), 2, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-            array = (unsigned short **) daa(sizeof(unsigned short), 2, d, st,
-                &err_code, free_ptr, (char *)&init);
-        }
-        else if (test == 1)
-        {
-            array = (unsigned short **) daav(sizeof(unsigned short), 2, d, st,
-                &err_code, &free_ptr, (char *)&init);
-        }
+        array = (unsigned short **) daa(sizeof(unsigned short), 2, d, st, &err_code, mem_ptr, (char *)&init);
 
         if (array == NULL)
         {
@@ -972,7 +828,7 @@ main()
                 }
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
 
@@ -984,7 +840,7 @@ main()
         int i;
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[1] = {3}; /* dimension */
         int st[1] = {0}; /* start subscript */
@@ -1005,18 +861,9 @@ main()
 
         asize = das(sizeof(STRING_FOUR_MEGS), 1, d, &err_code);
 
-        if (test == 0)
-        {
-            free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-	    array = (STRING_FOUR_MEGS *) daa(sizeof(STRING_FOUR_MEGS), 1, d, st,
-	        &err_code, free_ptr, (char *)NULL);
-        }
-        else if (test == 1)
-        {
-	    array = (STRING_FOUR_MEGS *) daav(sizeof(STRING_FOUR_MEGS), 1, d, st,
-	        &err_code, &free_ptr, (char *)NULL);
-        }
+        array = (STRING_FOUR_MEGS *) daa(sizeof(STRING_FOUR_MEGS), 1, d, st, &err_code, mem_ptr, (char *)NULL);
 
         if (array == NULL)
         {
@@ -1041,10 +888,8 @@ main()
                 fprintf(stderr, "array[%2d] = %s\n", i, (unsigned char *)&array[i]);
             }
             fprintf(stderr, "err_code = %d\n", err_code);
-            free(free_ptr);
+            free(mem_ptr);
         }
     }
-
-    exit(0);
 }
 

@@ -19,6 +19,8 @@ Dynamic Array Allocator - C++
   - array or slices of array can be passed to subroutines to any depth, modified there,
     and be seen at all levels
 
+  - simple library, two routines(das()(calculate space needed) and daa()(allocate ptr to ptr ... array))
+
   - initialization pointer argument set to instance of initialized type or NULL for no initialization
 
   - implemented by a recursive routine(ptr_init()) which calls two other different recursive
@@ -30,7 +32,7 @@ Dynamic Array Allocator - C++
 
   - 16 verification tests that show code usage examples, see daa/daa_test.cpp
 
-  - see cut/paste Examples section and API(das(), daa(), daav()) section below
+  - see cut/paste Examples section and API(das(), daa()) section below
 
   - a daa-compile.tar file is provided with a non-header compiled(clang, clang++, gcc, g++) version
 
@@ -41,9 +43,9 @@ Dynamic Array Allocator - C++
 
   - Author: Richard Hogaboom, richard.hogaboom@gmail.com
 
-Common Usage:
-    a. das()/valloc()/daa() - find size necessary then allocate memory then populate allocated memory
-    b. daav()               - all in one(uses valloc())
+Usage:
+    das()/malloc()(or whatever memory allocation routine)/daa() - find size necessary(das()), then allocate
+    memory, then populate allocated memory(daa())
 
 Files:
 
@@ -51,6 +53,7 @@ Files:
     daa.hpp         - header only C++ implementation
     daa.mk          - build script, compiles/executes test code
     daa_test.cpp    - test code
+    README          - documentation for library
 
 Examples:
 
@@ -59,7 +62,7 @@ Examples:
     From Test 1
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[4] = {3, 5, 4, 2}; /* dimension */
         int st[4] = {-1, -5, 10, 0}; /* start subscript */
@@ -67,20 +70,20 @@ Examples:
 
         asize = das(sizeof(double), 4, d, &err_code);
 
-        free_ptr = (char *)valloc(asize);
+        mem_ptr = (char *)malloc(asize);
 
-        array = (double ****) daa(sizeof(double), 4, d, st, &err_code, free_ptr, NULL);
+        array = (double ****) daa(sizeof(double), 4, d, st, &err_code, mem_ptr, NULL);
 
         array[1][1][1][1] = 2;
 
         fprintf(stderr, "array[1][1][1][1] = %5.1f\n" array[1][1][1][1]);
 
-        free(free_ptr);
+        free(mem_ptr);
 
     From Test 3
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[1] = {10}; /* dimension */
         int st[1] = {1}; /* start subscript */
@@ -89,7 +92,9 @@ Examples:
 
         asize = das(sizeof(double), 1, d, &err_code);
 
-        array = (double *) daav(sizeof(double), 1, d, st, &err_code, &free_ptr, (char *)&init);
+        mem_ptr = (char *)malloc(asize);
+
+        array = (double *) daa(sizeof(double), 1, d, st, &err_code, mem_ptr, (char *)&init);
 
         array[10] = 4.5;
 
@@ -99,12 +104,12 @@ Examples:
 
         fprintf(stderr, "err_code = %d\n", err_code);
 
-        free(free_ptr);
+        free(mem_ptr);
 
     From Test 4
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[10] = {3, 3, 2, 4, 5, 4, 4, 4, 4, 4}; /* dimension */
         int st[10] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5}; /* start subscript */
@@ -113,7 +118,9 @@ Examples:
 
         asize = das(sizeof(double), 10, d, &err_code);
 
-        array = (double **********) daav(sizeof(double), 10, d, st, &err_code, &free_ptr, (char *)&init);
+        mem_ptr = (char *)malloc(asize);
+
+        array = (double **********) daa(sizeof(double), 10, d, st, &err_code, mem_ptr, (char *)&init);
 
         array[-4][-3][-2][-1][0][1][2][3][4][5] = 1.5e2;
 
@@ -125,12 +132,12 @@ Examples:
 
         fprintf(stderr, "err_code = %d\n", err_code);
 
-        free(free_ptr);
+        free(mem_ptr);
 
     From Test 5
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[1] = {10}; /* dimension */
         int st[1] = {1}; /* start subscript */
@@ -141,7 +148,9 @@ Examples:
 
         asize = das(sizeof(struct s), 1, d, &err_code);
 
-        array = (struct s *) daav(sizeof(struct s), 1, d, st, &err_code, &free_ptr, (char *)&s_init);
+        mem_ptr = (char *)malloc(asize);
+
+        array = (struct s *) daa(sizeof(struct s), 1, d, st, &err_code, mem_ptr, (char *)&s_init);
 
         array[1].l= 10;
         array[1].d= .5;
@@ -157,12 +166,12 @@ Examples:
 
         fprintf(stderr, "err_code = %d\n", err_code);
 
-        free(free_ptr);
+        free(mem_ptr);
 
     From Test 13
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[3] = {2, 5, 6}; /* dimension */
         int st[3] = {0, 0, 0}; /* start subscript */
@@ -170,7 +179,9 @@ Examples:
 
         asize = das(sizeof(enum e), 3, d, &err_code);
 
-        array = (enum e ***) daav(sizeof(enum e), 3, d, st, &err_code, &free_ptr, (char *)&e_init);
+        mem_ptr = (char *)malloc(asize);
+
+        array = (enum e ***) daa(sizeof(enum e), 3, d, st, &err_code, mem_ptr, (char *)&e_init);
 
         fprintf(stderr, "sizeof(enum e) = %ld\n",sizeof(enum e));
 
@@ -188,12 +199,12 @@ Examples:
 
         fprintf(stderr, "err_code = %d\n", err_code);
 
-        free(free_ptr);
+        free(mem_ptr);
 
     From Test 16
         int err_code = 0;
         int asize = 0;
-        char *free_ptr;
+        char *mem_ptr;
 
         unsigned int d[1] = {3}; /* dimension */
         int st[1] = {0}; /* start subscript */
@@ -210,7 +221,9 @@ Examples:
 
         asize = das(sizeof(STRING_FOUR_MEGS), 1, d, &err_code);
 
-        array = (STRING_FOUR_MEGS *) daav(sizeof(STRING_FOUR_MEGS), 1, d, st, &err_code, &free_ptr, (char *)NULL);
+        mem_ptr = (char *)malloc(asize);
+
+        array = (STRING_FOUR_MEGS *) daa(sizeof(STRING_FOUR_MEGS), 1, d, st, &err_code, mem_ptr, (char *)NULL);
 
         memset((unsigned char *)&array[0], 0, FOUR_MEGS);
         memset((unsigned char *)&array[1], 1, FOUR_MEGS);
@@ -231,7 +244,7 @@ Examples:
 
         fprintf(stderr, "err_code = %d\n", err_code);
 
-        free(free_ptr);
+        free(mem_ptr);
 
 API:
 
@@ -243,29 +256,22 @@ API:
  *     Array Allocation" by Richard A Hogaboom
  *
  * Description:
- *     these dynamic array allocators - daa() and daav() - are designed
- *     to be efficient and flexible.  daa() takes as argument a pointer
- *     to the space that the caller allocates.  the size of this space is
- *     determined by a previous call to das().  the usual sequence would
- *     be das()/valloc()/daa().  daav() takes as argument a pointer to
- *     pointer that daav() returns the pointer to the valloc()'ed space in.
- *     they can allocate arrays of up to MAX_DIM dimensions of any type that
- *     will return a size with the sizeof() C operator.  they are also very
- *     efficient from the point of view of array access.  for daav() the
- *     single valloc() ensures locality of reference that eliminates excess
- *     paging encountered with dynamic array allocation schemes that use
- *     multiple valloc()'s.  arrays of structure, enum or union type can
- *     be allocated.  a corresponding free of the allocated area must
- *     normally be done (unless you want to allocate to program termination).
- *     for daav() the sixth parameter returns the free pointer; daa() does
- *     not require a free pointer since the caller allocates the space.
- *     do not free on the function return pointer since array storage begins
- *     with the data and is followed by pointers to pointers to ..., and the
- *     first element(lowest subscript of each dimension), does not point to
- *     the beginning of allocated space.  the array is initialized to the
- *     value pointed to by the last parameter, or not initialized if NULL.
- *     the last parameter init pointer should point to something with a size
- *     the same as the size of the type in the sizeof() first argument.
+ *     this dynamic array allocator - das()/daa() - is designed to be efficient
+ *     and flexible.  daa() takes as argument a pointer to the space that the
+ *     caller allocates.  the size of this space is determined by a previous
+ *     call to das().  the usual sequence would be das()/malloc()/daa().  
+ *     it can allocate arrays of up to MAX_DIM dimensions of any type that
+ *     will return a size with the sizeof() C operator.  it is also very
+ *     efficient from the point of view of array access.  arrays of structure,
+ *     enum or union type can be allocated.  a corresponding free of the
+ *     allocated space must normally be done (unless you want to allocate to
+ *     program termination).  do not free on the function return pointer since
+ *     array storage begins with the data and is followed by ptrs to ptrs to
+ *     ..., and the first element(lowest subscript of each dimension), does
+ *     not point to the beginning of allocated space.  the array is initialized
+ *     to the value pointed to by the last parameter, or not initialized if
+ *     NULL.  the last parameter init pointer should point to something with a
+ *     size the same as the size of the type in the sizeof() first argument.
  *     arrays may be allocated to have one or more dimensions with non-zero
  *     integer(+ or -) start subscripts.  thus, arrays may be one based or
  *     zero based or minus one based or any based for that matter.
@@ -287,14 +293,13 @@ API:
  *
  *     2. alignment of the data area is the alignment of the first argument
  *        sizeof(), while the alignment of the pointer area is sizeof(char *).
- *        the data comes first, and the assumption here is that the valloc()
- *        (for daav()) and whatever allocation routine is used between das()
- *        and daa() will align at the most stringent boundary, thus
- *        accommodating the data area alignment.  the pointer area comes
- *        second and may, depending on the total size of the data area need
- *        to be aligned on a sizeof(char *) boundary.  the beginning of the
- *        pointer area is tested for alignment, and its alignment adjusted if
- *        necessary.
+ *        the data comes first, and the assumption here is that whatever
+ *        allocation routine is used between das() and daa() will align at
+ *        the most stringent boundary, thus accommodating the data area
+ *        alignment.  the pointer area comes second and may, depending on the
+ *        total size of the data area need to be aligned on a sizeof(char *)
+ *        boundary.  the beginning of the  pointer area is tested for
+ *        alignment, and its alignment adjusted if necessary.
  *
  *     3. for an excellent reference on this type of array access see Numerical
  *        Recipes in C, Press, Flannery, Teukolsky, and Vettering, Cambridge
@@ -302,12 +307,11 @@ API:
  */
 
 /*
- *------------------------------------------------------------------------------
  * das:
  *     dynamic array size.  this routine takes four of the same arguments
- *     that daa() and daav() take and calculates the total heap allocation
- *     in bytes required to store the array.  normally used in conjunction
- *     with daa() to do das()/valloc()/daa() sequence.
+ *     that daa() takes and calculates the total heap allocation in bytes
+ *     required to store the array.  normally used in conjunction with
+ *     daa() to do das()/valloc()/daa() sequence.
  *
  * Arguments:
  *     unsigned int data_size
@@ -325,22 +329,19 @@ API:
  *        index to returned error code string in daa_errs[].
  *
  * Returns:
- *     size in bytes of dynamic array that daa() and daav() will use.
- *------------------------------------------------------------------------------
+ *     size in bytes of dynamic array that daa() will use.
  */
 
-    int
+    inline int
 das(
     unsigned int data_size,
     unsigned int num_dim,
     unsigned int *dim,
     int *err_code)
 
-
 /*
- *------------------------------------------------------------------------------
  * daa:
- *     dynamic array allocation with memory allocated externally.
+ *     dynamic array allocator
  *
  * Arguments:
  *     unsigned int data_size
@@ -379,17 +380,15 @@ das(
  *     ERRS_INV_DIMS - invalid number of dimensions - must be > 0 and <= MAX_DIM.
  *     ERRS_INV_REQ_SIZE - invalid request size - must be > 0.
  *     ERRS_INV_DIM - invalid dimension - must be > 0.
- *     ERRS_FAIL_ALLOC - failure to allocate memory. (daav() only)
  *
  *     failure to index the subscripts in the manner established by the starting
  *     index and the dimensional extent arrays will of course result in run time
  *     errors.  this is not an array allocation error but an array usage error,
  *     similar to any array access on a static C zero based array outside the
  *     normal 0...n-1 bounds.
- *------------------------------------------------------------------------------
  */
 
-    void *
+    inline void *
 daa(
     unsigned int data_size,
     unsigned int num_dim,
@@ -398,69 +397,6 @@ daa(
     int *err_code,
     char *base_ptr,
     char *init_ptr)
-
-
-/*
- *------------------------------------------------------------------------------
- * daav:
- *     dynamic array allocation with memory allocated by valloc().
- *
- * Arguments:
- *     unsigned int data_size
- *        size of the basic array data object.  this will usually be
- *        obtained from the sizeof() operator.
- *
- *     unsigned int num_dim
- *        number of array dimensions.
- *
- *     unsigned int *dim
- *        a single dimensional int array of the dimensions of the array to
- *        be allocated.
- *
- *     int *st
- *        a single dimensional int array of integer start subscripts for
- *        each corresponding dimension of the dim array, elements may
- *        be negative.
- *
- *     int *err_code
- *        index to returned error code string in daa_errs[].
- *
- *     char char **free_ptr
- *        pointer to the base pointer of the valloc()'ed array
- *        space for the caller to free.
- *
- *     char *init_ptr
- *        initialization pointer parameter.
- *
- * Returns:
- *     error free operation returns a pointer to void that points to the start
- *     of the dynamically allocated array area and does not set *err_code.  the
- *     returned pointer will need to be cast to the type of the subsequent array
- *     references.
- *
- *     routine failure returns NULL and any of the following
- *     error codes in *err_code:
- *     ERRS_INV_DIMS - invalid number of dimensions - must be > 0 and <= MAX_DIM.
- *     ERRS_INV_REQ_SIZE - invalid request size - must be > 0.
- *     ERRS_INV_DIM - invalid dimension - must be > 0.
- *     ERRS_FAIL_ALLOC - failure to allocate memory. (daav() only)
- *
- *     failure to index the subscripts in the manner established by the starting
- *     index and the dimensional extent arrays will of course result in run time
- *     errors.  this is not an array allocation error but an array usage error,
- *     similar to any array access on a static C zero based array outside the
- *     normal 0...n-1 bounds.
- *------------------------------------------------------------------------------
- */
-
-    void *
-daav(
-    unsigned int data_size,
-    unsigned int num_dim,
-    unsigned int *dim,
-    int *st,
-    int *err_code,
-    char **free_ptr,
-    char *init_ptr)
+}
 
 ```
