@@ -311,7 +311,7 @@ API:
  *     dynamic array size.  this routine takes four of the same arguments
  *     that daa() takes and calculates the total heap allocation in bytes
  *     required to store the array.  normally used in conjunction with
- *     daa() to do das()/valloc()/daa() sequence.
+ *     daa() to do das()/malloc()/daa() sequence.
  *
  * Arguments:
  *     unsigned int data_size
