@@ -126,9 +126,11 @@ Examples:
 
         fprintf(stderr, "array size = %d\n", asize);
 
-        fprintf(stderr, "array[-4][-3][-2][-1][0][1][2][3][4][5] = %e\n" , array[-4][-3][-2][-1][0][1][2][3][4][5]);
+        fprintf(stderr, "array[-4][-3][-2][-1][0][1][2][3][4][5] = %e\n",
+            array[-4][-3][-2][-1][0][1][2][3][4][5]);
 
-        fprintf(stderr, "array[-4][-3][-2][-1][0][1][2][3][4][6] = %e\n" , array[-4][-3][-2][-1][0][1][2][3][4][6]);
+        fprintf(stderr, "array[-4][-3][-2][-1][0][1][2][3][4][6] = %e\n",
+            array[-4][-3][-2][-1][0][1][2][3][4][6]);
 
         fprintf(stderr, "err_code = %d\n", err_code);
 
@@ -223,7 +225,8 @@ Examples:
 
         mem_ptr = (char *)malloc(asize);
 
-        array = (STRING_FOUR_MEGS *) daa(sizeof(STRING_FOUR_MEGS), 1, d, st, &err_code, mem_ptr, (char *)NULL);
+        array = (STRING_FOUR_MEGS *)
+                daa(sizeof(STRING_FOUR_MEGS), 1, d, st, &err_code, mem_ptr, (char *)NULL);
 
         memset((unsigned char *)&array[0], 0, FOUR_MEGS);
         memset((unsigned char *)&array[1], 1, FOUR_MEGS);
