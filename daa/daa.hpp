@@ -14,7 +14,7 @@
  *     caller allocates.  the size of this space is determined by a previous
  *     call to das().  the usual sequence would be das()/malloc()/daa().  
  *     it can allocate arrays of up to MAX_DIM dimensions of any type that
- *     will return a size with the sizeof() C operator.  it is also very
+ *     will return a size with the sizeof() function.  it is also very
  *     efficient from the point of view of array access.  arrays of structure,
  *     enum or union type can be allocated.  a corresponding free of the
  *     allocated space must normally be done (unless you want to allocate to
@@ -27,7 +27,9 @@
  *     size the same as the size of the type in the sizeof() first argument.
  *     arrays may be allocated to have one or more dimensions with non-zero
  *     integer(+ or -) start subscripts.  thus, arrays may be one based or
- *     zero based or minus one based or any based for that matter.
+ *     zero based or minus one based or any based for that matter.  when the
+ *     array is to be deallocated, the pointer returned by malloc()(or whatever)
+ *     is passed to free().
  *
  * Examples:
  *     see daa_test.cpp
@@ -50,7 +52,7 @@
  *        allocation routine is used between das() and daa() will align at
  *        the most stringent boundary, thus accommodating the data area
  *        alignment.  the pointer area comes second and may, depending on the
- *        total size of the data area need to be aligned on a sizeof(char *)
+ *        total size of the data area, need to be aligned on a sizeof(char *)
  *        boundary.  the beginning of the  pointer area is tested for
  *        alignment, and its alignment adjusted if necessary.
  *
@@ -179,7 +181,7 @@ off(
  *
  *     unsigned int data_size
  *        size of the basic array data object.  this will usually be
- *        obtained from the sizeof() operator.
+ *        obtained from the sizeof() function.
  *
  *     unsigned int num_dim
  *        number of array dimensions.
@@ -280,18 +282,17 @@ ptr_init(
     return (char *) ptrs;
 }
 
-
 /*
  * das:
  *     dynamic array size.  this routine takes four of the same arguments
- *     that daa() takes and calculates the total heap allocation in bytes
+ *     that daa() takes and calculates the total space allocation in bytes
  *     required to store the array.  normally used in conjunction with
- *     daa() to do das()/malloc()/daa() sequence.
+ *     daa() to do a das()/malloc()/daa() sequence.
  *
  * Arguments:
  *     unsigned int data_size
  *        size of the basic array data object.  this will usually be
- *        obtained from the sizeof() operator.
+ *        obtained from the sizeof() function.
  *
  *     unsigned int num_dim
  *        number of array dimensions.
@@ -351,7 +352,6 @@ das(
         sizeof(char *));
 }
 
-
 /*
  * daa:
  *     dynamic array allocator
@@ -359,7 +359,7 @@ das(
  * Arguments:
  *     unsigned int data_size
  *        size of the basic array data object.  this will usually be
- *        obtained from the sizeof() operator.
+ *        obtained from the sizeof() function.
  *
  *     unsigned int num_dim
  *        number of array dimensions.
@@ -395,10 +395,10 @@ das(
  *     ERRS_INV_DIM - invalid dimension - must be > 0.
  *
  *     failure to index the subscripts in the manner established by the starting
- *     index and the dimensional extent arrays will of course result in run time
- *     errors.  this is not an array allocation error but an array usage error,
- *     similar to any array access on a static C zero based array outside the
- *     normal 0...n-1 bounds.
+ *     index and the dimensional extent will of course result in run time errors.
+ *     this is not an array allocation error but an array usage error, similar
+ *     to any array access on a static C zero based array outside the normal
+ *     0...n-1 bounds.
  */
 
     inline void *
@@ -497,3 +497,4 @@ daa(
 }
 
 #endif
+

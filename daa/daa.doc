@@ -4,7 +4,7 @@ daa
 ===
 
 Dynamic Array Allocator - C++
-  
+ 
   - ptr to ptr to ... style arbitrary N dimensional array allocator of anything you can take sizeof()
 
   - arbitrary starting subscript(0, 1, -10, ...) for each separate dimension - Note: for each array
@@ -30,7 +30,7 @@ Dynamic Array Allocator - C++
 
   - see article in The C Users Journal, Nov. 1990. "A Flexible Dynamic Array Allocator"(included)
 
-  - 16 verification tests that show code usage examples, see daa/daa_test.cpp
+  - 16 verification tests that show code usage examples, see daa_test.cpp
 
   - see cut/paste Examples section and API(das(), daa()) section below
 
@@ -57,7 +57,7 @@ Files:
 
 Examples:
 
-    All examples are from the test code in daa/daa_test.cpp.
+    All examples are from the test code in daa_test.cpp.
 
     From Test 1
         int err_code = 0;
@@ -68,10 +68,13 @@ Examples:
         int st[4] = {-1, -5, 10, 0}; /* start subscript */
         double ****array = NULL; /* array pointer */
 
+        /* calculate array size */
         asize = das(sizeof(double), 4, d, &err_code);
 
+        /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
+        /* populate allocated memory with ptr to ptr ... and data */
         array = (double ****) daa(sizeof(double), 4, d, st, &err_code, mem_ptr, NULL);
 
         array[1][1][1][1] = 2;
@@ -90,10 +93,13 @@ Examples:
         double init = 10.10;
         double *array = NULL; /* array pointer */
 
+        /* calculate array size */
         asize = das(sizeof(double), 1, d, &err_code);
 
+        /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
+        /* populate allocated memory with ptr to ptr ... and data */
         array = (double *) daa(sizeof(double), 1, d, st, &err_code, mem_ptr, (char *)&init);
 
         array[10] = 4.5;
@@ -116,10 +122,13 @@ Examples:
         double init = 0;
         double **********array = NULL; /* array pointer */
 
+        /* calculate array size */
         asize = das(sizeof(double), 10, d, &err_code);
 
+        /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
+        /* populate allocated memory with ptr to ptr ... and data */
         array = (double **********) daa(sizeof(double), 10, d, st, &err_code, mem_ptr, (char *)&init);
 
         array[-4][-3][-2][-1][0][1][2][3][4][5] = 1.5e2;
@@ -148,10 +157,13 @@ Examples:
             int l;
         } *array = NULL, s_init = {1.25, 5}; /* array pointer */
 
+        /* calculate array size */
         asize = das(sizeof(struct s), 1, d, &err_code);
 
+        /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
+        /* populate allocated memory with ptr to ptr ... and data */
         array = (struct s *) daa(sizeof(struct s), 1, d, st, &err_code, mem_ptr, (char *)&s_init);
 
         array[1].l= 10;
@@ -179,10 +191,13 @@ Examples:
         int st[3] = {0, 0, 0}; /* start subscript */
         enum e {a,b,c} ***array = NULL, e_init = {c}; /* array pointer */
 
+        /* calculate array size */
         asize = das(sizeof(enum e), 3, d, &err_code);
 
+        /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
+        /* populate allocated memory with ptr to ptr ... and data */
         array = (enum e ***) daa(sizeof(enum e), 3, d, st, &err_code, mem_ptr, (char *)&e_init);
 
         fprintf(stderr, "sizeof(enum e) = %ld\n",sizeof(enum e));
@@ -221,10 +236,13 @@ Examples:
 
         STRING_FOUR_MEGS *array = NULL; /* array pointer */
 
+        /* calculate array size */
         asize = das(sizeof(STRING_FOUR_MEGS), 1, d, &err_code);
 
+        /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
+        /* populate allocated memory with ptr to ptr ... and data */
         array = (STRING_FOUR_MEGS *)
                 daa(sizeof(STRING_FOUR_MEGS), 1, d, st, &err_code, mem_ptr, (char *)NULL);
 
@@ -264,7 +282,7 @@ API:
  *     caller allocates.  the size of this space is determined by a previous
  *     call to das().  the usual sequence would be das()/malloc()/daa().  
  *     it can allocate arrays of up to MAX_DIM dimensions of any type that
- *     will return a size with the sizeof() C operator.  it is also very
+ *     will return a size with the sizeof() function.  it is also very
  *     efficient from the point of view of array access.  arrays of structure,
  *     enum or union type can be allocated.  a corresponding free of the
  *     allocated space must normally be done (unless you want to allocate to
@@ -277,7 +295,9 @@ API:
  *     size the same as the size of the type in the sizeof() first argument.
  *     arrays may be allocated to have one or more dimensions with non-zero
  *     integer(+ or -) start subscripts.  thus, arrays may be one based or
- *     zero based or minus one based or any based for that matter.
+ *     zero based or minus one based or any based for that matter.  when the
+ *     array is to be deallocated, the pointer returned by malloc()(or whatever)
+ *     is passed to free().
  *
  * Examples:
  *     see daa_test.cpp
@@ -300,7 +320,7 @@ API:
  *        allocation routine is used between das() and daa() will align at
  *        the most stringent boundary, thus accommodating the data area
  *        alignment.  the pointer area comes second and may, depending on the
- *        total size of the data area need to be aligned on a sizeof(char *)
+ *        total size of the data area, need to be aligned on a sizeof(char *)
  *        boundary.  the beginning of the  pointer area is tested for
  *        alignment, and its alignment adjusted if necessary.
  *
@@ -312,14 +332,14 @@ API:
 /*
  * das:
  *     dynamic array size.  this routine takes four of the same arguments
- *     that daa() takes and calculates the total heap allocation in bytes
+ *     that daa() takes and calculates the total space allocation in bytes
  *     required to store the array.  normally used in conjunction with
- *     daa() to do das()/malloc()/daa() sequence.
+ *     daa() to do a das()/malloc()/daa() sequence.
  *
  * Arguments:
  *     unsigned int data_size
  *        size of the basic array data object.  this will usually be
- *        obtained from the sizeof() operator.
+ *        obtained from the sizeof() function.
  *
  *     unsigned int num_dim
  *        number of array dimensions.
@@ -349,7 +369,7 @@ das(
  * Arguments:
  *     unsigned int data_size
  *        size of the basic array data object.  this will usually be
- *        obtained from the sizeof() operator.
+ *        obtained from the sizeof() function.
  *
  *     unsigned int num_dim
  *        number of array dimensions.
@@ -385,10 +405,10 @@ das(
  *     ERRS_INV_DIM - invalid dimension - must be > 0.
  *
  *     failure to index the subscripts in the manner established by the starting
- *     index and the dimensional extent arrays will of course result in run time
- *     errors.  this is not an array allocation error but an array usage error,
- *     similar to any array access on a static C zero based array outside the
- *     normal 0...n-1 bounds.
+ *     index and the dimensional extent will of course result in run time errors.
+ *     this is not an array allocation error but an array usage error, similar
+ *     to any array access on a static C zero based array outside the normal
+ *     0...n-1 bounds.
  */
 
     inline void *
