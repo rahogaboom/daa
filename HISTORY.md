@@ -6,6 +6,7 @@
     c. checked against compilers:
            g++     - g++ (GCC) 8.2.1 20181215 (Red Hat 8.2.1-6)
            clang++ - clang version 7.0.0 (Fedora 7.0.0-2.fc29)
+    d. added test to store allocated array to stack(as opposed to heap)
 
  daa-1.0.3.tar.gz - 
     a. converted to daa.hpp header file only implementation.

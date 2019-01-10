@@ -891,5 +891,49 @@ main()
             free(mem_ptr);
         }
     }
+
+    /*
+     * TEST 17
+     *    2 dimensional double array(on stack)
+     */
+    {
+        int i, j;
+        int err_code = 0;
+        int asize = 0;
+
+        unsigned int d[2] = {3, 3}; /* dimension */
+        int st[2] = {1, 1}; /* start subscript */
+        double **array = NULL; /* array pointer */
+        double init = 1.5;
+
+        char stack[1024]; /* stack area for array(as opposed to heap)) */
+
+        fprintf(stderr, "\nTEST 17\n");
+
+        asize = das(sizeof(double), 2, d, &err_code);
+
+        array = (double **) daa(sizeof(double), 2, d, st, &err_code, stack, (char *)&init);
+
+        if (array == NULL)
+        {
+            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+                , daa_errs[err_code]);
+        }
+        else
+        {
+            fprintf(stderr, "sizeof(double) = %ld\n", sizeof(double));
+            fprintf(stderr, "array size = %d\n", asize);
+            for (i=st[0] ; i<st[0]+int(d[0]) ; i++)
+            {
+                for (j=st[1] ; j<st[1]+int(d[1]) ; j++)
+                {
+                    fprintf(stderr,
+                        "array[%2d][%2d] = %5.1f\n", i, j, array[i][j]);
+                }
+            }
+
+            fprintf(stderr, "err_code = %d\n", err_code);
+        }
+    }
 }
 

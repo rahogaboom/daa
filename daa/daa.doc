@@ -30,7 +30,7 @@ Dynamic Array Allocator - C++
 
   - see article in The C Users Journal, Nov. 1990. "A Flexible Dynamic Array Allocator"(included)
 
-  - 16 verification tests that show code usage examples, see daa_test.cpp
+  - 17 verification tests that show code usage examples, see daa_test.cpp
 
   - see cut/paste Examples section and API(das(), daa()) section below
 
