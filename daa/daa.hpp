@@ -61,7 +61,7 @@
  *        University Press, 1992, pg. 20.
  */
 
-#include <stdlib.h>
+#include <cstdlib>
 
 /* global constants */
 const unsigned int MAX_DIM = 256; /* maximum number of array dimensions */

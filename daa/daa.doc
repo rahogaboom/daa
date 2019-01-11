@@ -21,6 +21,8 @@ Dynamic Array Allocator - C++
 
   - simple library, two routines(das()(calculate space needed) and daa()(allocate ptr to ptr ... array))
 
+  - no library dependencies(except standard header files)
+
   - initialization pointer argument set to instance of initialized type or NULL for no initialization
 
   - implemented by a recursive routine(ptr_init()) which calls two other different recursive
