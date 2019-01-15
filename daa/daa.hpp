@@ -34,14 +34,6 @@
  * Examples:
  *     see daa_test.cpp
  *
- * Author:
- *    Richard Hogaboom
- *    richard.hogaboom@gmail.com
- *
- *==================================================================================================
- */
-
-/*
  * Notes:
  *     1. the dimensional limit of the allocated arrays is set by MAX_DIM;
  *        increase or decrease this to adjust the maximum array dimension.
@@ -59,6 +51,12 @@
  *     3. for an excellent reference on this type of array access see Numerical
  *        Recipes in C, Press, Flannery, Teukolsky, and Vettering, Cambridge
  *        University Press, 1992, pg. 20.
+ *
+ * Author:
+ *    Richard Hogaboom
+ *    richard.hogaboom@gmail.com
+ *
+ *==================================================================================================
  */
 
 #include <cstdlib>

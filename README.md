@@ -1,49 +1,49 @@
 ```
 
-daa
-===
+Library:
+    daa.hpp
 
 Dynamic Array Allocator - C++
  
-  - ptr to ptr to ... style arbitrary N dimensional array allocator of anything you can take sizeof()
+    - ptr to ptr to ... style arbitrary N dimensional array allocator of anything you can take sizeof()
 
-  - arbitrary starting subscript(0, 1, -10, ...) for each separate dimension - Note: for each array
-    dimension the starting subscript and dimension size determine the valid subscripts for that
-    dimension - any index outside that range is invalid and will give unpredictable results
+    - arbitrary starting subscript(0, 1, -10, ...) for each separate dimension - Note: for each array
+      dimension the starting subscript and dimension size determine the valid subscripts for that
+      dimension - any index outside that range is invalid and will give unpredictable results
 
-  - allocates anything of any type(double, int, long, struct, ...)
+    - allocates anything of any type(double, int, long, struct, ...)
 
-  - one contiguous block allocation of memory for all ptr's and data(locality of
-    reference and easy free())
+    - one contiguous block allocation of memory for all ptr's and data(locality of
+      reference and easy free())
 
-  - array or slices of array can be passed to subroutines to any depth, modified there,
-    and be seen at all levels
+    - array or slices of array can be passed to subroutines to any depth, modified there,
+      and be seen at all levels
 
-  - simple library, two routines(das()(calculate space needed) and daa()(allocate ptr to ptr ... array))
+    - simple library, two routines(das()(calculate space needed) and daa()(allocate ptr to ptr ... array))
 
-  - no library dependencies(except standard header files)
+    - no library dependencies(except standard header files)
 
-  - initialization pointer argument set to instance of initialized type or NULL for no initialization
+    - initialization pointer argument set to instance of initialized type or NULL for no initialization
 
-  - implemented by a recursive routine(ptr_init()) which calls two other different recursive
-    routines(off() and doff())
+    - implemented by a recursive routine(ptr_init()) which calls two other different recursive
+      routines(off() and doff())
 
-  - see article in Embedded Systems Programming, Dec. 2000, "Flexible Dynamic Array Allocation"(included)
+    - see article in Embedded Systems Programming, Dec. 2000, "Flexible Dynamic Array Allocation"(included)
 
-  - see article in The C Users Journal, Nov. 1990. "A Flexible Dynamic Array Allocator"(included)
+    - see article in The C Users Journal, Nov. 1990. "A Flexible Dynamic Array Allocator"(included)
 
-  - 17 verification tests that show code usage examples, see daa_test.cpp
+    - 17 verification tests that show code usage examples, see daa_test.cpp
 
-  - see cut/paste Examples section and API(das(), daa()) section below
+    - see cut/paste Examples section and API(das(), daa()) section below
 
-  - a daa-compile.tar file is provided with a non-header compiled(clang, clang++, gcc, g++) version
+    - a daa-compile.tar file is provided with a non-header compiled(clang, clang++, gcc, g++) version
 
-  - for an excellent reference on this type of array(ptr to ptr to ...) access see Numerical Recipes
-    in C, Press, Flannery, Teukolsky, and Vettering, Cambridge University Press, 1992, pg. 20.
+    - for an excellent reference on this type of array(ptr to ptr to ...) access see Numerical Recipes
+      in C, Press, Flannery, Teukolsky, and Vettering, Cambridge University Press, 1992, pg. 20.
 
-  - this file is the entire documentation needed to use the library
+    - this file is the entire documentation needed to use the library
 
-  - Author: Richard Hogaboom, richard.hogaboom@gmail.com
+    - Author: Richard Hogaboom, richard.hogaboom@gmail.com
 
 Usage:
     das()/malloc()(or whatever memory allocation routine)/daa() - find size necessary(das()), then allocate
@@ -52,10 +52,10 @@ Usage:
 Files:
 
     daa-compile.tar - non-header compiled(clang, clang++, gcc, g++) version
+    daa.doc         - documentation for library
     daa.hpp         - header only C++ implementation
     daa.mk          - build script, compiles/executes test code
     daa_test.cpp    - test code
-    README          - documentation for library
 
 Examples:
 
@@ -304,14 +304,6 @@ API:
  * Examples:
  *     see daa_test.cpp
  *
- * Author:
- *    Richard Hogaboom
- *    richard.hogaboom@gmail.com
- *
- *==================================================================================================
- */
-
-/*
  * Notes:
  *     1. the dimensional limit of the allocated arrays is set by MAX_DIM;
  *        increase or decrease this to adjust the maximum array dimension.
@@ -329,6 +321,12 @@ API:
  *     3. for an excellent reference on this type of array access see Numerical
  *        Recipes in C, Press, Flannery, Teukolsky, and Vettering, Cambridge
  *        University Press, 1992, pg. 20.
+ *
+ * Author:
+ *    Richard Hogaboom
+ *    richard.hogaboom@gmail.com
+ *
+ *==================================================================================================
  */
 
 /*
@@ -422,6 +420,7 @@ daa(
     int *err_code,
     char *base_ptr,
     char *init_ptr)
-}
+
+#endif
 
 ```
