@@ -1,5 +1,8 @@
 ```
 
+ daa-1.0.5.tar.gz - 
+    a. minor code and doc changes
+
  daa-1.0.4.tar.gz - 
     a. minor doc changes in several places.
     b. rename README to daa.doc to better indicate where doc is.
