@@ -46,8 +46,11 @@ Dynamic Array Allocator - C++
     - Author: Richard Hogaboom, richard.hogaboom@gmail.com
 
 Usage:
-    das()/malloc()(or whatever memory allocation routine)/daa() - find size necessary(das()), then allocate
-    memory, then populate allocated memory(daa())
+    - das()/malloc()(or whatever memory allocation routine)/daa() - find size necessary(das()),
+      then allocate memory(malloc()), then populate allocated memory(daa())
+
+    - allocate auto stack storage area e.g. unsigned char mem[SIZE], use das() to determine if
+      array will fit in mem[], use daa() to allocate array
 
 Files:
 
