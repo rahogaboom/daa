@@ -4,7 +4,7 @@ Library:
     daa.hpp
 
 Dynamic Array Allocator - C++
- 
+
     - ptr to ptr to ... style arbitrary N dimensional array allocator of anything you can take sizeof()
 
     - arbitrary starting subscript(0, 1, -10, ...) for each separate dimension - Note: for each array
@@ -49,8 +49,8 @@ Usage:
     - das()/malloc()(or whatever memory allocation routine)/daa() - find size necessary(das()),
       then allocate memory(malloc()), then populate allocated memory(daa())
 
-    - allocate auto stack storage area e.g. unsigned char mem[SIZE], use das() to determine if
-      array will fit in mem[], use daa() to allocate array
+    - allocate auto stack or static area storage e.g. unsigned char mem[SIZE], use das() to determine
+      if array will fit in mem[], use daa() to allocate array
 
 Files:
 
@@ -64,7 +64,7 @@ Examples:
 
     All examples are from the test code in daa_test.cpp.
 
-    From Test 1
+    From TEST 1
         int err_code = 0;
         int asize = 0;
         char *mem_ptr;
@@ -88,7 +88,7 @@ Examples:
 
         free(mem_ptr);
 
-    From Test 3
+    From TEST 3
         int err_code = 0;
         int asize = 0;
         char *mem_ptr;
@@ -117,7 +117,7 @@ Examples:
 
         free(mem_ptr);
 
-    From Test 4
+    From TEST 4
         int err_code = 0;
         int asize = 0;
         char *mem_ptr;
@@ -150,7 +150,7 @@ Examples:
 
         free(mem_ptr);
 
-    From Test 5
+    From TEST 5
         int err_code = 0;
         int asize = 0;
         char *mem_ptr;
@@ -187,7 +187,7 @@ Examples:
 
         free(mem_ptr);
 
-    From Test 13
+    From TEST 13
         int err_code = 0;
         int asize = 0;
         char *mem_ptr;
@@ -223,7 +223,7 @@ Examples:
 
         free(mem_ptr);
 
-    From Test 16
+    From TEST 16
         int err_code = 0;
         int asize = 0;
         char *mem_ptr;
@@ -423,7 +423,5 @@ daa(
     int *err_code,
     char *base_ptr,
     char *init_ptr)
-
-#endif
 
 ```

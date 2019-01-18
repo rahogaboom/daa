@@ -1,5 +1,8 @@
 ```
 
+ daa-1.0.6.tar.gz - 
+    a. doc changes
+
  daa-1.0.5.tar.gz - 
     a. minor code and doc changes
 
