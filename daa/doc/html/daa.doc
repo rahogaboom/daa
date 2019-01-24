@@ -3,7 +3,7 @@
 Library:
     daa.hpp
 
-Dynamic Array Allocator - C++ a header file only library
+Dynamic Array Allocator - C++ header file only library
 
     - ptr to ptr to ... style arbitrary N dimensional array allocator of anything you can take sizeof()
 
