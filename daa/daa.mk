@@ -20,7 +20,7 @@ O=g
 #O=O
 
 # compile test program
-$CC -$O -ansi -pedantic -Wall -I ../daa -o daa_test test/daa_test.cpp
+$CC -$O -ansi -pedantic -Wall -I. -o daa_test test/daa_test.cpp
 
 # run test program
 ./daa_test 2> daa_test.results
