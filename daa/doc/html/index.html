@@ -1,5 +1,18 @@
-```
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 6.1.4.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.5in 11in; margin: 0.79in }
+		p { margin-bottom: 0.1in; line-height: 115%; background: transparent }
+		pre { font-family: "Liberation Mono", monospace; font-size: 10pt; background: transparent }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre>
 Library:
     daa.hpp
 
@@ -28,9 +41,9 @@ Dynamic Array Allocator - C++ header file only library
     - implemented by a recursive routine(ptr_init()) which calls two other different recursive
       routines(off() and doff())
 
-    - see article in Embedded Systems Programming, Dec. 2000, "Flexible Dynamic Array Allocation"(included)
+    - see article in Embedded Systems Programming, Dec. 2000, &quot;Flexible Dynamic Array Allocation&quot;(included)
 
-    - see article in The C Users Journal, Nov. 1990. "A Flexible Dynamic Array Allocator"(included)
+    - see article in The C Users Journal, Nov. 1990. &quot;A Flexible Dynamic Array Allocator&quot;(included)
 
     - 17 verification tests that show code usage examples, see daa_test.cpp
 
@@ -74,17 +87,17 @@ Examples:
         double ****array = NULL; /* array pointer */
 
         /* calculate array size */
-        asize = das(sizeof(double), 4, d, &err_code);
+        asize = das(sizeof(double), 4, d, &amp;err_code);
 
         /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
         /* populate allocated memory with ptr to ptr ... and data */
-        array = (double ****) daa(sizeof(double), 4, d, st, &err_code, mem_ptr, NULL);
+        array = (double ****) daa(sizeof(double), 4, d, st, &amp;err_code, mem_ptr, NULL);
 
         array[1][1][1][1] = 2;
 
-        fprintf(stderr, "array[1][1][1][1] = %5.1f\n" array[1][1][1][1]);
+        fprintf(stderr, &quot;array[1][1][1][1] = %5.1f\n&quot; array[1][1][1][1]);
 
         free(mem_ptr);
 
@@ -99,21 +112,21 @@ Examples:
         double *array = NULL; /* array pointer */
 
         /* calculate array size */
-        asize = das(sizeof(double), 1, d, &err_code);
+        asize = das(sizeof(double), 1, d, &amp;err_code);
 
         /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
         /* populate allocated memory with ptr to ptr ... and data */
-        array = (double *) daa(sizeof(double), 1, d, st, &err_code, mem_ptr, (char *)&init);
+        array = (double *) daa(sizeof(double), 1, d, st, &amp;err_code, mem_ptr, (char *)&amp;init);
 
         array[10] = 4.5;
 
-        fprintf(stderr, "array size = %d\n", asize);
+        fprintf(stderr, &quot;array size = %d\n&quot;, asize);
 
-        fprintf(stderr, "array[10] = %e\n", array[10]);
+        fprintf(stderr, &quot;array[10] = %e\n&quot;, array[10]);
 
-        fprintf(stderr, "err_code = %d\n", err_code);
+        fprintf(stderr, &quot;err_code = %d\n&quot;, err_code);
 
         free(mem_ptr);
 
@@ -128,25 +141,25 @@ Examples:
         double **********array = NULL; /* array pointer */
 
         /* calculate array size */
-        asize = das(sizeof(double), 10, d, &err_code);
+        asize = das(sizeof(double), 10, d, &amp;err_code);
 
         /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
         /* populate allocated memory with ptr to ptr ... and data */
-        array = (double **********) daa(sizeof(double), 10, d, st, &err_code, mem_ptr, (char *)&init);
+        array = (double **********) daa(sizeof(double), 10, d, st, &amp;err_code, mem_ptr, (char *)&amp;init);
 
         array[-4][-3][-2][-1][0][1][2][3][4][5] = 1.5e2;
 
-        fprintf(stderr, "array size = %d\n", asize);
+        fprintf(stderr, &quot;array size = %d\n&quot;, asize);
 
-        fprintf(stderr, "array[-4][-3][-2][-1][0][1][2][3][4][5] = %e\n",
+        fprintf(stderr, &quot;array[-4][-3][-2][-1][0][1][2][3][4][5] = %e\n&quot;,
             array[-4][-3][-2][-1][0][1][2][3][4][5]);
 
-        fprintf(stderr, "array[-4][-3][-2][-1][0][1][2][3][4][6] = %e\n",
+        fprintf(stderr, &quot;array[-4][-3][-2][-1][0][1][2][3][4][6] = %e\n&quot;,
             array[-4][-3][-2][-1][0][1][2][3][4][6]);
 
-        fprintf(stderr, "err_code = %d\n", err_code);
+        fprintf(stderr, &quot;err_code = %d\n&quot;, err_code);
 
         free(mem_ptr);
 
@@ -163,27 +176,27 @@ Examples:
         } *array = NULL, s_init = {1.25, 5}; /* array pointer */
 
         /* calculate array size */
-        asize = das(sizeof(struct s), 1, d, &err_code);
+        asize = das(sizeof(struct s), 1, d, &amp;err_code);
 
         /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
         /* populate allocated memory with ptr to ptr ... and data */
-        array = (struct s *) daa(sizeof(struct s), 1, d, st, &err_code, mem_ptr, (char *)&s_init);
+        array = (struct s *) daa(sizeof(struct s), 1, d, st, &amp;err_code, mem_ptr, (char *)&amp;s_init);
 
         array[1].l= 10;
         array[1].d= .5;
         array[10].l = 4;
         array[10].d = 4.5;
 
-        fprintf(stderr, "sizeof(struct s) = %ld\n", sizeof(struct s));
+        fprintf(stderr, &quot;sizeof(struct s) = %ld\n&quot;, sizeof(struct s));
 
-        fprintf(stderr, "array size = %d\n", asize);
+        fprintf(stderr, &quot;array size = %d\n&quot;, asize);
 
-        fprintf(stderr, "array[1].d = %f\n", array[1].d);
-        fprintf(stderr, "array[10].l = %2d\n", array[10].l);
+        fprintf(stderr, &quot;array[1].d = %f\n&quot;, array[1].d);
+        fprintf(stderr, &quot;array[10].l = %2d\n&quot;, array[10].l);
 
-        fprintf(stderr, "err_code = %d\n", err_code);
+        fprintf(stderr, &quot;err_code = %d\n&quot;, err_code);
 
         free(mem_ptr);
 
@@ -197,29 +210,29 @@ Examples:
         enum e {a,b,c} ***array = NULL, e_init = {c}; /* array pointer */
 
         /* calculate array size */
-        asize = das(sizeof(enum e), 3, d, &err_code);
+        asize = das(sizeof(enum e), 3, d, &amp;err_code);
 
         /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
         /* populate allocated memory with ptr to ptr ... and data */
-        array = (enum e ***) daa(sizeof(enum e), 3, d, st, &err_code, mem_ptr, (char *)&e_init);
+        array = (enum e ***) daa(sizeof(enum e), 3, d, st, &amp;err_code, mem_ptr, (char *)&amp;e_init);
 
-        fprintf(stderr, "sizeof(enum e) = %ld\n",sizeof(enum e));
+        fprintf(stderr, &quot;sizeof(enum e) = %ld\n&quot;,sizeof(enum e));
 
-        fprintf(stderr, "array size = %d\n", asize);
+        fprintf(stderr, &quot;array size = %d\n&quot;, asize);
 
-        fprintf(stderr, "array[1][4][4] = %d\n", array[1][4][4]);
+        fprintf(stderr, &quot;array[1][4][4] = %d\n&quot;, array[1][4][4]);
 
         array[1][4][5] = a;
 
-        fprintf(stderr, "array[1][4][5] = %d\n", array[1][4][5]);
+        fprintf(stderr, &quot;array[1][4][5] = %d\n&quot;, array[1][4][5]);
 
         array[1][4][5] = b;
 
-        fprintf(stderr, "array[1][4][5] = %d\n", array[1][4][5]);
+        fprintf(stderr, &quot;array[1][4][5] = %d\n&quot;, array[1][4][5]);
 
-        fprintf(stderr, "err_code = %d\n", err_code);
+        fprintf(stderr, &quot;err_code = %d\n&quot;, err_code);
 
         free(mem_ptr);
 
@@ -242,33 +255,33 @@ Examples:
         STRING_FOUR_MEGS *array = NULL; /* array pointer */
 
         /* calculate array size */
-        asize = das(sizeof(STRING_FOUR_MEGS), 1, d, &err_code);
+        asize = das(sizeof(STRING_FOUR_MEGS), 1, d, &amp;err_code);
 
         /* allocate memory */
         mem_ptr = (char *)malloc(asize);
 
         /* populate allocated memory with ptr to ptr ... and data */
         array = (STRING_FOUR_MEGS *)
-                daa(sizeof(STRING_FOUR_MEGS), 1, d, st, &err_code, mem_ptr, (char *)NULL);
+                daa(sizeof(STRING_FOUR_MEGS), 1, d, st, &amp;err_code, mem_ptr, (char *)NULL);
 
-        memset((unsigned char *)&array[0], 0, FOUR_MEGS);
-        memset((unsigned char *)&array[1], 1, FOUR_MEGS);
-        memset((unsigned char *)&array[2], 2, FOUR_MEGS);
+        memset((unsigned char *)&amp;array[0], 0, FOUR_MEGS);
+        memset((unsigned char *)&amp;array[1], 1, FOUR_MEGS);
+        memset((unsigned char *)&amp;array[2], 2, FOUR_MEGS);
 
-        strcpy((char *)&array[0], "AXXXXXXXXX");
-        strcpy((char *)&array[1], "XXXXBXXXXX");
-        strcpy((char *)&array[2], "XXXXXXXXXC");
+        strcpy((char *)&amp;array[0], &quot;AXXXXXXXXX&quot;);
+        strcpy((char *)&amp;array[1], &quot;XXXXBXXXXX&quot;);
+        strcpy((char *)&amp;array[2], &quot;XXXXXXXXXC&quot;);
 
-        fprintf(stderr, "sizeof(STRING_FOUR_MEGS) = %ld\n" , sizeof(STRING_FOUR_MEGS));
+        fprintf(stderr, &quot;sizeof(STRING_FOUR_MEGS) = %ld\n&quot; , sizeof(STRING_FOUR_MEGS));
 
-        fprintf(stderr, "array size = %d\n", asize);
+        fprintf(stderr, &quot;array size = %d\n&quot;, asize);
 
-        for (int i=st[0]; i<st[0]+int(d[0]) ; i++)
+        for (int i=st[0]; i&lt;st[0]+int(d[0]) ; i++)
         {
-            fprintf(stderr, "array[%2d] = %s\n", i, (unsigned char *)&array[i]);
+            fprintf(stderr, &quot;array[%2d] = %s\n&quot;, i, (unsigned char *)&amp;array[i]);
         }
 
-        fprintf(stderr, "err_code = %d\n", err_code);
+        fprintf(stderr, &quot;err_code = %d\n&quot;, err_code);
 
         free(mem_ptr);
 
@@ -278,8 +291,8 @@ API:
  *==================================================================================================
  * File: daa.hpp
  *
- *     Based on Dec. 2000 Embedded Systems Design article "Flexible Dynamic
- *     Array Allocation" by Richard A Hogaboom
+ *     Based on Dec. 2000 Embedded Systems Design article &quot;Flexible Dynamic
+ *     Array Allocation&quot; by Richard A Hogaboom
  *
  * Description:
  *     this dynamic array allocator - das()/daa() - is designed to be efficient
@@ -403,9 +416,9 @@ das(
  *
  *     routine failure returns NULL and any of the following
  *     error codes in *err_code:
- *     ERRS_INV_DIMS - invalid number of dimensions - must be > 0 and <= MAX_DIM.
- *     ERRS_INV_REQ_SIZE - invalid request size - must be > 0.
- *     ERRS_INV_DIM - invalid dimension - must be > 0.
+ *     ERRS_INV_DIMS - invalid number of dimensions - must be &gt; 0 and &lt;= MAX_DIM.
+ *     ERRS_INV_REQ_SIZE - invalid request size - must be &gt; 0.
+ *     ERRS_INV_DIM - invalid dimension - must be &gt; 0.
  *
  *     failure to index the subscripts in the manner established by the starting
  *     index and the dimensional extent will of course result in run time errors.
@@ -423,5 +436,6 @@ daa(
     int *err_code,
     char *base_ptr,
     char *init_ptr)
-
-```
+</pre>
+</body>
+</html>

@@ -1,7 +1,9 @@
 ```
 
  daa-1.0.6.tar.gz - 
-    a. doc changes
+    a. minor doc changes
+    b. directory structure changes
+    c. add doc/html/index.html file
 
  daa-1.0.5.tar.gz - 
     a. minor code and doc changes
