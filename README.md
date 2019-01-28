@@ -40,6 +40,8 @@ Dynamic Array Allocator - C++ header file only library
 
     - for an excellent reference on this type of array(ptr to ptr to ...) access see Numerical Recipes
       in C, Press, Flannery, Teukolsky, and Vettering, Cambridge University Press, 1992, pg. 20.
+      Ch. 1 Preliminaries -> 1.2 Some C Conventions for Scientific Computing -> Matrices and
+      Two-Dimensional Arrays.
 
     - this file is the entire documentation needed to use the library
 
