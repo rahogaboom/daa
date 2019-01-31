@@ -46,7 +46,10 @@ main()
 {
     /*
      * TEST 1
-     *    4 dimensional double array
+     *     4 dimensional array of double
+     *     dimensions: 3, 5, 4, 2
+     *     starting subscripts: -1, -5, 10, 0
+     *     init: NULL
      */
     {
         int i, j, k, l;
@@ -54,11 +57,15 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[4] = {3, 5, 4, 2}; /* dimension */
-        int st[4] = {-1, -5, 10, 0}; /* start subscript */
+        unsigned int d[4] = {3, 5, 4, 2}; /* dimensions */
+        int st[4] = {-1, -5, 10, 0}; /* starting subscripts */
         double ****array = NULL; /* array pointer */
 
-        fprintf(stderr, "\nTEST 1\n");
+        fprintf(stderr, "\nTEST 1");
+        fprintf(stderr, "\n    4 dimensional array of double");
+        fprintf(stderr, "\n    dimensions: 3, 5, 4, 2");
+        fprintf(stderr, "\n    starting subscripts: -1, -5, 10, 0");
+        fprintf(stderr, "\n    init: NULL\n\n");
 
         asize = das(sizeof(double), 4, d, &err_code);
 
@@ -100,7 +107,10 @@ main()
 
     /*
      * TEST 2
-     *    4 dimensional double array
+     *     4 dimensional array of double
+     *     dimensions: 3, 5, 4, 2
+     *     starting subscripts: -1, -5, 10, 0
+     *     init: 123.
      */
     {
         int i, j, k, l;
@@ -108,12 +118,16 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[4] = {3, 5, 4, 2}; /* dimension */
-        int st[4] = {-1, -5, 10, 0}; /* start subscript */
+        unsigned int d[4] = {3, 5, 4, 2}; /* dimensions */
+        int st[4] = {-1, -5, 10, 0}; /* starting subscripts */
         double init = 123.;
         double ****array = NULL; /* array pointer */
 
-        fprintf(stderr, "\nTEST 2\n");
+        fprintf(stderr, "\nTEST 2");
+        fprintf(stderr, "\n    4 dimensional array of double");
+        fprintf(stderr, "\n    dimensions: 3, 5, 4, 2");
+        fprintf(stderr, "\n    starting subscripts: -1, -5, 10, 0");
+        fprintf(stderr, "\n    init: 123.\n\n");
 
         asize = das(sizeof(double), 4, d, &err_code);
 
@@ -154,7 +168,10 @@ main()
 
     /*
      * TEST 3
-     *    1 dimensional double array
+     *     1 dimensional array of double
+     *     dimensions: 10
+     *     starting subscripts: 1
+     *     init: 10.10
      */
     {
         int i;
@@ -162,12 +179,16 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[1] = {10}; /* dimension */
-        int st[1] = {1}; /* start subscript */
+        unsigned int d[1] = {10}; /* dimensions */
+        int st[1] = {1}; /* starting subscripts */
         double init = 10.10;
         double *array = NULL; /* array pointer */
 
-        fprintf(stderr, "\nTEST 3\n");
+        fprintf(stderr, "\nTEST 3");
+        fprintf(stderr, "\n    1 dimensional array of double");
+        fprintf(stderr, "\n    dimensions: 10");
+        fprintf(stderr, "\n    starting subscripts: 1");
+        fprintf(stderr, "\n    init: 10.10\n\n");
 
         asize = das(sizeof(double), 1, d, &err_code);
 
@@ -196,8 +217,11 @@ main()
     }
 
     /*
-     * TEST 4
-     *    10 dimensional double array
+     *  TEST 4
+     *      10 dimensional double array
+     *      dimensions: 3, 3, 2, 4, 5, 4, 4, 4, 4, 4
+     *      starting subscripts: -4, -3, -2, -1, 0, 1, 2, 3, 4, 5
+     *      init: 0
      *
      * Note:
      *    this is by far the largest allocation test.  only the first and
@@ -211,13 +235,17 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[10] = {3, 3, 2, 4, 5, 4, 4, 4, 4, 4}; /* dimension */
-        int st[10] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5}; /* start subscript */
+        unsigned int d[10] = {3, 3, 2, 4, 5, 4, 4, 4, 4, 4}; /* dimensions */
+        int st[10] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5}; /* starting subscripts */
         double data;
         double init = 0;
         double **********array = NULL; /* array pointer */
 
-        fprintf(stderr, "\nTEST 4\n");
+        fprintf(stderr, "\nTEST 4");
+        fprintf(stderr, "\n    10 dimensional double array");
+        fprintf(stderr, "\n    dimensions: 3, 3, 2, 4, 5, 4, 4, 4, 4, 4");
+        fprintf(stderr, "\n    starting subscripts: -4, -3, -2, -1, 0, 1, 2, 3, 4, 5");
+        fprintf(stderr, "\n    init: 0\n\n");
 
         asize = das(sizeof(double), 10, d, &err_code);
 
@@ -279,7 +307,10 @@ main()
 
     /*
      * TEST 5
-     *    1 dimensional array of struct
+     *     1 dimensional array of struct
+     *     dimensions: 1
+     *     starting subscripts: 1
+     *     init: struct s { double d; int l; } s_init = {1.25, 5}
      */
     {
         int i;
@@ -287,14 +318,18 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[1] = {10}; /* dimension */
-        int st[1] = {1}; /* start subscript */
+        unsigned int d[1] = {10}; /* dimensions */
+        int st[1] = {1}; /* starting subscripts */
         struct s {
             double d;
             int l;
         } *array = NULL, s_init = {1.25, 5}; /* array pointer */
 
-        fprintf(stderr, "\nTEST 5\n");
+        fprintf(stderr, "\nTEST 5");
+        fprintf(stderr, "\n    1 dimensional array of struct");
+        fprintf(stderr, "\n    dimensions: 1");
+        fprintf(stderr, "\n    starting subscripts: 1");
+        fprintf(stderr, "\n    init: struct s { double d; int l; } s_init = {1.25, 5}\n\n");
 
         asize = das(sizeof(struct s), 1, d, &err_code);
 
@@ -318,7 +353,7 @@ main()
             fprintf(stderr, "array size = %d\n", asize);
             for (i=st[0] ; i<st[0]+int(d[0]) ; i++)
             {
-                fprintf(stderr, "array[%2d].d = %f\n", i, array[i].d);
+                fprintf(stderr, "array[%2d].d = %f ", i, array[i].d);
                 fprintf(stderr, "array[%2d].l = %2d\n", i, array[i].l);
             }
             fprintf(stderr, "err_code = %d\n", err_code);
@@ -328,7 +363,10 @@ main()
 
     /*
      * TEST 6
-     *    2 dimensional array of struct
+     *     2 dimensional struct array
+     *     dimensions: 5, 5
+     *     starting subscripts: 0, 0
+     *     init: struct s { double d; int l; } s_init = {1, 5}
      */
     {
         int i, j;
@@ -336,14 +374,18 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[2] = {5, 5}; /* dimension */
-        int st[2] = {0, 0}; /* start subscript */
+        unsigned int d[2] = {5, 5}; /* dimensions */
+        int st[2] = {0, 0}; /* starting subscripts */
         struct s {
             double d;
             int l;
         } **array = NULL, s_init = {1, 5}; /* array pointer */
 
-        fprintf(stderr, "\nTEST 6\n");
+        fprintf(stderr, "\nTEST 6");
+        fprintf(stderr, "\n    2 dimensional struct array");
+        fprintf(stderr, "\n    dimensions: 5, 5");
+        fprintf(stderr, "\n    starting subscripts: 0, 0");
+        fprintf(stderr, "\n    init: struct s { double d; int l; } s_init = {1, 5}\n\n");
 
         asize = das(sizeof(struct s), 2, d, &err_code);
 
@@ -370,8 +412,8 @@ main()
                 for (j=st[1] ; j<st[1]+int(d[1]) ; j++)
                 {
                     fprintf(stderr,
-                        "array[%2d][%2d].l = %2d array[%2d][%2d].d = %f\n",
-                        i, j, array[i][j].l, i, j, array[i][j].d);
+                        "array[%2d][%2d].d = %f array[%2d][%2d].l = %2d\n",
+                        i, j, array[i][j].d, i, j, array[i][j].l);
                 }
             }
             fprintf(stderr, "err_code = %d\n", err_code);
@@ -381,7 +423,10 @@ main()
 
     /*
      * TEST 7
-     *    3 dimensional array of struct
+     *     3 dimensional struct array
+     *     dimensions: 2, 5, 6
+     *     starting subscripts: 0, 0, 0
+     *     init: struct s { char c; int l; double d; } s_init = {0, 1, 10}
      */
     {
         int i, j, k;
@@ -389,15 +434,19 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[3] = {2, 5, 6}; /* dimension */
-        int st[3] = {0, 0, 0}; /* start subscript */
+        unsigned int d[3] = {2, 5, 6}; /* dimensions */
+        int st[3] = {0, 0, 0}; /* starting subscripts */
         struct s {
             char c;
             int l;
             double d;
         } ***array = NULL, s_init = {0, 1, 10}; /* array pointer */
 
-        fprintf(stderr, "\nTEST 7\n");
+        fprintf(stderr, "\nTEST 7");
+        fprintf(stderr, "\n    3 dimensional struct array");
+        fprintf(stderr, "\n    dimensions: 2, 5, 6");
+        fprintf(stderr, "\n    starting subscripts: 0, 0, 0");
+        fprintf(stderr, "\n    init: struct s { char c; int l; double d; } s_init = {0, 1, 10}\n\n");
 
         asize = das(sizeof(struct s), 3, d, &err_code);
 
@@ -440,22 +489,29 @@ main()
 
     /*
      * TEST 8
-     *    3 dimensional array of struct
+     *     3 dimensional struct array
+     *     dimensions: 1, 2, 3
+     *     starting subscripts: -1, -1, -1
+     *     init: struct s { double d; int l; char c; } s_init = {1, 10, 0}
      */
     {
         int err_code = 0;
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[3] = {1, 2, 3}; /* dimension */
-        int st[3] = {-1, -1, -1}; /* start subscript */
+        unsigned int d[3] = {1, 2, 3}; /* dimensions */
+        int st[3] = {-1, -1, -1}; /* starting subscripts */
         struct s {
             double d;
             int l;
             char c;
         } ***array = NULL, s_init = {1, 10, 0}; /* array pointer */
 
-        fprintf(stderr, "\nTEST 8\n");
+        fprintf(stderr, "\nTEST 8");
+        fprintf(stderr, "\n    3 dimensional struct array");
+        fprintf(stderr, "\n    dimensions: 1, 2, 3");
+        fprintf(stderr, "\n    starting subscripts: -1, -1, -1");
+        fprintf(stderr, "\n    init: struct s { double d; int l; char c; } s_init = {1, 10, 0}\n\n");
 
         asize = das(sizeof(struct s), 3, d, &err_code);
 
@@ -476,14 +532,14 @@ main()
 
             fprintf(stderr, "sizeof(struct s) = %ld\n", sizeof(struct s));
             fprintf(stderr, "array size = %d\n", asize);
-            fprintf(stderr, "array[-1][0][0].l = %d"
-                            " array[-1][0][0].d = %e"
+            fprintf(stderr, "array[-1][0][0].d = %e"
+                            " array[-1][0][0].l = %d"
                             " array[-1][0][0].c = %d\n",
-               array[-1][0][0].l, array[-1][0][0].d, array[-1][0][0].c);
-            fprintf(stderr, "array[-1][0][1].l = %d"
-                            " array[-1][0][1].d = %e"
+               array[-1][0][0].d, array[-1][0][0].l, array[-1][0][0].c);
+            fprintf(stderr, "array[-1][0][1].d = %e"
+                            " array[-1][0][1].l = %d"
                             " array[-1][0][1].c = %d\n",
-               array[-1][0][1].l, array[-1][0][1].d, array[-1][0][1].c);
+               array[-1][0][1].d, array[-1][0][1].l, array[-1][0][1].c);
             fprintf(stderr, "err_code = %d\n", err_code);
             free(mem_ptr);
         }
@@ -491,7 +547,10 @@ main()
 
     /*
      * TEST 9
-     *    1 dimensional int array
+     *     1 dimensional int array
+     *     dimensions: 10
+     *     starting subscripts: 1
+     *     init: 12
      */
     {
         int i;
@@ -499,12 +558,16 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[1] = {10}; /* dimension */
-        int st[1] = {1}; /* start subscript */
+        unsigned int d[1] = {10}; /* dimensions */
+        int st[1] = {1}; /* starting subscripts */
         int init = 12;
         int *array = NULL; /* array pointer */
 
-        fprintf(stderr, "\nTEST 9\n");
+        fprintf(stderr, "\nTEST 9");
+        fprintf(stderr, "\n    1 dimensional int array");
+        fprintf(stderr, "\n    dimensions: 10");
+        fprintf(stderr, "\n    starting subscripts: 1");
+        fprintf(stderr, "\n    init: 12\n\n");
 
         asize = das(sizeof(int), 1, d, &err_code);
 
@@ -534,7 +597,10 @@ main()
 
     /*
      * TEST 10
-     *    2 dimensional int array
+     *     2 dimensional int array
+     *     dimensions: 2, 2
+     *     starting subscripts: -20, 20
+     *     init: 0
      */
     {
         int i, j;
@@ -542,13 +608,17 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[2] = {2, 2}; /* dimension */
-        int st[2] = {-20, 20}; /* start subscript */
+        unsigned int d[2] = {2, 2}; /* dimensions */
+        int st[2] = {-20, 20}; /* starting subscripts */
         int data;
         int init = 0;
         int **array = NULL; /* array pointer */
 
-        fprintf(stderr, "\nTEST 10\n");
+        fprintf(stderr, "\nTEST 10");
+        fprintf(stderr, "\n    2 dimensional int array");
+        fprintf(stderr, "\n    dimensions: 2, 2");
+        fprintf(stderr, "\n    starting subscripts: -20, 20");
+        fprintf(stderr, "\n    init: 0\n\n");
 
         asize = das(sizeof(int), 2, d, &err_code);
 
@@ -597,8 +667,8 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[3] = {3, 3, 3}; /* dimension */
-        int st[3] = {-10, -20, -30}; /* start subscript */
+        unsigned int d[3] = {3, 3, 3}; /* dimensions */
+        int st[3] = {-10, -20, -30}; /* starting subscripts */
         int data;
         int init = 2;
         int ***array = NULL; /* array pointer */
@@ -657,8 +727,8 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[3] = {2, 5, 6}; /* dimension */
-        int st[3] = {0, 0, 0}; /* start subscript */
+        unsigned int d[3] = {2, 5, 6}; /* dimensions */
+        int st[3] = {0, 0, 0}; /* starting subscripts */
         union s {
             int l;
             double d;
@@ -703,8 +773,8 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[3] = {2, 5, 6}; /* dimension */
-        int st[3] = {0, 0, 0}; /* start subscript */
+        unsigned int d[3] = {2, 5, 6}; /* dimensions */
+        int st[3] = {0, 0, 0}; /* starting subscripts */
         enum e {a,b,c} ***array = NULL, e_init = {c}; /* array pointer */
 
         fprintf(stderr, "\nTEST 13\n");
@@ -747,8 +817,8 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[2] = {15, 5}; /* dimension */
-        int st[2] = {-1, -1}; /* start subscript */
+        unsigned int d[2] = {15, 5}; /* dimensions */
+        int st[2] = {-1, -1}; /* starting subscripts */
         short init = 11;
         short **array = NULL; /* array pointer */
 
@@ -794,8 +864,8 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[2] = {4, 5}; /* dimension */
-        int st[2] = {0, 1}; /* start subscript */
+        unsigned int d[2] = {4, 5}; /* dimensions */
+        int st[2] = {0, 1}; /* starting subscripts */
         unsigned short init = 13;
         unsigned short **array = NULL; /* array pointer */
 
@@ -842,8 +912,8 @@ main()
         int asize = 0;
         char *mem_ptr;
 
-        unsigned int d[1] = {3}; /* dimension */
-        int st[1] = {0}; /* start subscript */
+        unsigned int d[1] = {3}; /* dimensions */
+        int st[1] = {0}; /* starting subscripts */
 
         #define FOUR_MEGS (4*1024*1024)
 
@@ -901,8 +971,8 @@ main()
         int err_code = 0;
         int asize = 0;
 
-        unsigned int d[2] = {3, 3}; /* dimension */
-        int st[2] = {1, 1}; /* start subscript */
+        unsigned int d[2] = {3, 3}; /* dimensions */
+        int st[2] = {1, 1}; /* starting subscripts */
         double **array = NULL; /* array pointer */
         double init = 1.5;
 
