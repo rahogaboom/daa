@@ -726,7 +726,7 @@ main()
     }
 
     /*
-     * TEST 12\n
+     * TEST 12
      *     3 dimensional union array
      *     dimensions: 2, 5, 6
      *     starting subscripts: 0, 0, 0
@@ -829,7 +829,7 @@ main()
     }
 
     /*
-     * TEST 14\n
+     * TEST 14
      *     2 dimensional short array
      *     dimensions: 15, 5
      *     starting subscripts: -1, -1
