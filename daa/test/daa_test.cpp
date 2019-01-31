@@ -659,7 +659,10 @@ main()
 
     /*
      * TEST 11
-     *    3 dimensional int array
+     *     3 dimensional int array
+     *     dimensions: 3, 3, 3
+     *     starting subscripts: -10, -20, -30
+     *     init: 2
      */
     {
         int i, j, k;
@@ -673,7 +676,11 @@ main()
         int init = 2;
         int ***array = NULL; /* array pointer */
 
-        fprintf(stderr, "\nTEST 11\n");
+        fprintf(stderr, "\nTEST 11");
+        fprintf(stderr, "\n    3 dimensional int array");
+        fprintf(stderr, "\n    dimensions: 3, 3, 3");
+        fprintf(stderr, "\n    starting subscripts: -10, -20, -30");
+        fprintf(stderr, "\n    init: 2\n\n");
 
         asize = das(sizeof(int), 3, d, &err_code);
 
@@ -719,8 +726,11 @@ main()
     }
 
     /*
-     * TEST 12
-     *    3 dimensional union array
+     * TEST 12\n
+     *     3 dimensional union array
+     *     dimensions: 2, 5, 6
+     *     starting subscripts: 0, 0, 0
+     *     init: union s { int l; double d; } s_init = {5}
      */
     {
         int err_code = 0;
@@ -734,7 +744,11 @@ main()
             double d;
         } ***array = NULL, s_init = {5}; /* array pointer */
 
-        fprintf(stderr, "\nTEST 12\n");
+        fprintf(stderr, "\nTEST 12");
+        fprintf(stderr, "\n    3 dimensional union array");
+        fprintf(stderr, "\n    dimensions: 2, 5, 6");
+        fprintf(stderr, "\n    starting subscripts: 0, 0, 0");
+        fprintf(stderr, "\n    init: union s { int l; double d; } s_init = {5}\n\n");
 
         asize = das(sizeof(union s), 3, d, &err_code);
 
@@ -766,7 +780,10 @@ main()
 
     /*
      * TEST 13
-     *    3 dimensional enum array
+     *     3 dimensional enum array
+     *     dimensions: 2, 5, 6
+     *     starting subscripts: 0, 0, 0
+     *     init: enum e {a,b,c} e_init = {c}
      */
     {
         int err_code = 0;
@@ -777,7 +794,11 @@ main()
         int st[3] = {0, 0, 0}; /* starting subscripts */
         enum e {a,b,c} ***array = NULL, e_init = {c}; /* array pointer */
 
-        fprintf(stderr, "\nTEST 13\n");
+        fprintf(stderr, "\nTEST 13");
+        fprintf(stderr, "\n    3 dimensional enum array");
+        fprintf(stderr, "\n    dimensions: 2, 5, 6");
+        fprintf(stderr, "\n    starting subscripts: 0, 0, 0");
+        fprintf(stderr, "\n    init: enum e {a,b,c} e_init = {c}\n\n");
 
         asize = das(sizeof(enum e), 3, d, &err_code);
 
@@ -808,8 +829,11 @@ main()
     }
 
     /*
-     * TEST 14
-     *    2 dimensional short array
+     * TEST 14\n
+     *     2 dimensional short array
+     *     dimensions: 15, 5
+     *     starting subscripts: -1, -1
+     *     init: 11
      */
     {
         int i, j;
@@ -822,7 +846,11 @@ main()
         short init = 11;
         short **array = NULL; /* array pointer */
 
-        fprintf(stderr, "\nTEST 14\n");
+        fprintf(stderr, "\nTEST 14");
+        fprintf(stderr, "\n    2 dimensional short array");
+        fprintf(stderr, "\n    dimensions: 15, 5");
+        fprintf(stderr, "\n    starting subscripts: -1, -1");
+        fprintf(stderr, "\n    init: 11\n\n");
 
         asize = das(sizeof(short), 2, d, &err_code);
 
@@ -856,7 +884,10 @@ main()
 
     /*
      * TEST 15
-     *    2 dimensional unsigned short array
+     *     2 dimensional unsigned short array
+     *     dimensions: 4, 5
+     *     starting subscripts: 0, 1
+     *     init: 13
      */
     {
         int i, j;
@@ -869,7 +900,11 @@ main()
         unsigned short init = 13;
         unsigned short **array = NULL; /* array pointer */
 
-        fprintf(stderr, "\nTEST 15\n");
+        fprintf(stderr, "\nTEST 15");
+        fprintf(stderr, "\n    2 dimensional unsigned short array");
+        fprintf(stderr, "\n    dimensions: 4, 5");
+        fprintf(stderr, "\n    starting subscripts: 0, 1");
+        fprintf(stderr, "\n    init: 13\n\n");
 
         asize = das(sizeof(unsigned short), 2, d, &err_code);
 
@@ -904,7 +939,10 @@ main()
 
     /*
      * TEST 16
-     *    1 dimensional array of 3 four meg char strings
+     *     1 dimensional four meg char string array
+     *     dimensions: 3
+     *     starting subscripts: 0
+     *     init: NULL
      */
     {
         int i;
@@ -915,19 +953,21 @@ main()
         unsigned int d[1] = {3}; /* dimensions */
         int st[1] = {0}; /* starting subscripts */
 
-        #define FOUR_MEGS (4*1024*1024)
+        const int FOUR_MEGS = 4*1024*1024;
 
-	    /* four megs of unsigned char */
-	    typedef struct
-	    {
-	        unsigned char s[FOUR_MEGS];
-	    } STRING_FOUR_MEGS;
+        /* four megs of unsigned char */
+        typedef struct
+        {
+            unsigned char s[FOUR_MEGS];
+        } STRING_FOUR_MEGS;
 
         STRING_FOUR_MEGS *array = NULL; /* array pointer */
 
-
-
-        fprintf(stderr, "\nTEST 16\n");
+        fprintf(stderr, "\nTEST 16");
+        fprintf(stderr, "\n    1 dimensional four meg char string array");
+        fprintf(stderr, "\n    dimensions: 3");
+        fprintf(stderr, "\n    starting subscripts: 0");
+        fprintf(stderr, "\n    init: NULL\n\n");
 
         asize = das(sizeof(STRING_FOUR_MEGS), 1, d, &err_code);
 
@@ -964,7 +1004,10 @@ main()
 
     /*
      * TEST 17
-     *    2 dimensional double array(on stack)
+     *     2 dimensional double array(on stack)
+     *     dimensions: 3, 3
+     *     starting subscripts: 1, 1
+     *     init: 1.5
      */
     {
         int i, j;
@@ -973,12 +1016,16 @@ main()
 
         unsigned int d[2] = {3, 3}; /* dimensions */
         int st[2] = {1, 1}; /* starting subscripts */
-        double **array = NULL; /* array pointer */
         double init = 1.5;
+        double **array = NULL; /* array pointer */
 
         char stack[1024]; /* stack area for array(as opposed to heap)) */
 
-        fprintf(stderr, "\nTEST 17\n");
+        fprintf(stderr, "\nTEST 17");
+        fprintf(stderr, "\n    2 dimensional double array(on stack)");
+        fprintf(stderr, "\n    dimensions: 3, 3");
+        fprintf(stderr, "\n    starting subscripts: 1, 1");
+        fprintf(stderr, "\n    init: 1.5\n\n");
 
         asize = das(sizeof(double), 2, d, &err_code);
 
