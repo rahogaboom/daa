@@ -73,7 +73,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -90,14 +90,12 @@ main()
                     {
                         for (l=st[3] ; l<st[3]+int(d[3]) ; l++)
                         {
-                            fprintf(stderr,
-                                "array[%2d][%2d][%2d][%2d] = %5.1f\n"
+                            fprintf(stderr, "array[%2d][%2d][%2d][%2d] = %5.1f\n"
                                 , i, j, k, l, array[i][j][k][l]);
                         }
                     }
                 }
             }
-
             fprintf(stderr, "err_code = %d\n\n", err_code);
             free(mem_ptr);
         }
@@ -133,7 +131,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -150,8 +148,7 @@ main()
                     {
                         for (l=st[3] ; l<st[3]+int(d[3]) ; l++)
                         {
-                            fprintf(stderr,
-                                "array[%2d][%2d][%2d][%2d] = %5.1f\n"
+                            fprintf(stderr, "array[%2d][%2d][%2d][%2d] = %5.1f\n"
                                 , i, j, k, l, array[i][j][k][l]);
                         }
                     }
@@ -191,7 +188,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -242,7 +239,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 ,daa_errs[err_code]);
         }
         else
@@ -326,7 +323,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -340,7 +337,7 @@ main()
             fprintf(stderr, "array size = %d\n\n", asize);
             for (i=st[0] ; i<st[0]+int(d[0]) ; i++)
             {
-                fprintf(stderr, "array[%2d].d = %f ", i, array[i].d);
+                fprintf(stderr, "array[%2d].d = %f    ", i, array[i].d);
                 fprintf(stderr, "array[%2d].l = %2d\n", i, array[i].l);
             }
             fprintf(stderr, "err_code = %d\n\n", err_code);
@@ -372,7 +369,7 @@ main()
         fprintf(stderr, "\n    set array[0][0].d = .25");
         fprintf(stderr, "\n    set array[0][0].l = 10");
         fprintf(stderr, "\n    set array[4][4].d = 4.5");
-        fprintf(stderr, "\n    array[4][4].l = 4\n\n");
+        fprintf(stderr, "\n    set array[4][4].l = 4\n\n");
 
         asize = das(sizeof(struct s), 2, d, &err_code);
 
@@ -382,7 +379,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -398,9 +395,8 @@ main()
             {
                 for (j=st[1] ; j<st[1]+int(d[1]) ; j++)
                 {
-                    fprintf(stderr,
-                        "array[%2d][%2d].d = %f array[%2d][%2d].l = %2d\n",
-                        i, j, array[i][j].d, i, j, array[i][j].l);
+                    fprintf(stderr, "array[%2d][%2d].d = %f    ", i, j, array[i][j].d);
+                    fprintf(stderr, "array[%2d][%2d].l = %2d\n", i, j, array[i][j].l);
                 }
             }
             fprintf(stderr, "err_code = %d\n\n", err_code);
@@ -429,7 +425,10 @@ main()
         fprintf(stderr, "\n    3 dimensional struct array");
         fprintf(stderr, "\n        dimensions: 2, 5, 6");
         fprintf(stderr, "\n        starting subscripts: 0, 0, 0");
-        fprintf(stderr, "\n        init: struct s { char c; int l; double d; } s_init = {0, 1, 10}\n\n");
+        fprintf(stderr, "\n        init: struct s { char c; int l; double d; } s_init = {0, 1, 10}\n");
+        fprintf(stderr, "\n    set array[1][4][5].c = 1");
+        fprintf(stderr, "\n    set array[1][4][5].l = 15");
+        fprintf(stderr, "\n    set array[1][4][5].d = 7.5\n\n");
 
         asize = das(sizeof(struct s), 3, d, &err_code);
 
@@ -439,7 +438,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -456,12 +455,9 @@ main()
                 {
                     for (k=st[2] ; k<st[2]+int(d[2]) ; k++)
                     {
-                        fprintf(stderr, "array[%d][%d][%d].c = %2d"
-                                        " array[%d][%d][%d].l = %2d"
-                                        " array[%d][%d][%d].d = %e\n",
-                            i, j, k, array[i][j][k].c,
-                            i, j, k, array[i][j][k].l,
-                            i, j, k, array[i][j][k].d);
+                        fprintf(stderr, "array[%d][%d][%d].c = %2d    ", i, j, k, array[i][j][k].c);
+                        fprintf(stderr, "array[%d][%d][%d].l = %2d    ", i, j, k, array[i][j][k].l);
+                        fprintf(stderr, "array[%d][%d][%d].d = %e\n", i, j, k, array[i][j][k].d);
                     }
                 }
             }
@@ -490,7 +486,10 @@ main()
         fprintf(stderr, "\n    3 dimensional struct array");
         fprintf(stderr, "\n        dimensions: 1, 2, 3");
         fprintf(stderr, "\n        starting subscripts: -1, -1, -1");
-        fprintf(stderr, "\n        init: struct s { double d; int l; char c; } s_init = {1, 10, 0}\n\n");
+        fprintf(stderr, "\n        init: struct s { double d; int l; char c; } s_init = {1, 10, 0}\n");
+        fprintf(stderr, "\n    set array[-1][0][1].d = 7.5");
+        fprintf(stderr, "\n    set array[-1][0][1].l = 15");
+        fprintf(stderr, "\n    set array[-1][0][1].c = 2\n\n");
 
         asize = das(sizeof(struct s), 3, d, &err_code);
 
@@ -500,13 +499,13 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
         {
-            array[-1][0][1].l = 15;
             array[-1][0][1].d = 7.5;
+            array[-1][0][1].l = 15;
             array[-1][0][1].c = 2;
 
             fprintf(stderr, "sizeof(struct s) = %ld\n", sizeof(struct s));
@@ -542,7 +541,8 @@ main()
         fprintf(stderr, "\n    1 dimensional int array");
         fprintf(stderr, "\n        dimensions: 10");
         fprintf(stderr, "\n        starting subscripts: 1");
-        fprintf(stderr, "\n        init: 12\n\n");
+        fprintf(stderr, "\n        init: 12\n");
+        fprintf(stderr, "\n    set array[10] = 4\n\n");
 
         asize = das(sizeof(int), 1, d, &err_code);
 
@@ -552,7 +552,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -589,7 +589,8 @@ main()
         fprintf(stderr, "\n    2 dimensional int array");
         fprintf(stderr, "\n        dimensions: 2, 2");
         fprintf(stderr, "\n        starting subscripts: -20, 20");
-        fprintf(stderr, "\n        init: 0\n\n");
+        fprintf(stderr, "\n        init: 0\n");
+        fprintf(stderr, "\n    set array[i][j] = data++ each time array is accessed\n\n");
 
         asize = das(sizeof(int), 2, d, &err_code);
 
@@ -599,7 +600,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -647,7 +648,8 @@ main()
         fprintf(stderr, "\n    3 dimensional int array");
         fprintf(stderr, "\n        dimensions: 3, 3, 3");
         fprintf(stderr, "\n        starting subscripts: -10, -20, -30");
-        fprintf(stderr, "\n        init: 2\n\n");
+        fprintf(stderr, "\n        init: 2\n");
+        fprintf(stderr, "\n    set array[i][j][k] = data++ each time array is accessed\n\n");
 
         asize = das(sizeof(int), 3, d, &err_code);
 
@@ -657,7 +659,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -711,7 +713,10 @@ main()
         fprintf(stderr, "\n    3 dimensional union array");
         fprintf(stderr, "\n        dimensions: 2, 5, 6");
         fprintf(stderr, "\n        starting subscripts: 0, 0, 0");
-        fprintf(stderr, "\n        init: union s { int l; double d; } s_init = {5}\n\n");
+        fprintf(stderr, "\n        init: union s { int l; double d; } s_init = {5}\n");
+        fprintf(stderr, "\n    print array[1][4][4].l");
+        fprintf(stderr, "\n    set array[1][4][5].l = 7 then print");
+        fprintf(stderr, "\n    set array[1][4][5].d = 7.5 then print\n\n");
 
         asize = das(sizeof(union s), 3, d, &err_code);
 
@@ -721,7 +726,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -757,7 +762,10 @@ main()
         fprintf(stderr, "\n    3 dimensional enum array");
         fprintf(stderr, "\n        dimensions: 2, 5, 6");
         fprintf(stderr, "\n        starting subscripts: 0, 0, 0");
-        fprintf(stderr, "\n        init: enum e {a,b,c} e_init = {c}\n\n");
+        fprintf(stderr, "\n        init: enum e {a,b,c} e_init = {c}\n");
+        fprintf(stderr, "\n    print array[1][4][4] - should be 2");
+        fprintf(stderr, "\n    set array[1][4][5] = a - should be 0");
+        fprintf(stderr, "\n    set array[1][4][5] = b - should be 1\n\n");
 
         asize = das(sizeof(enum e), 3, d, &err_code);
 
@@ -767,7 +775,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -782,6 +790,7 @@ main()
 
             array[1][4][5] = b;
             fprintf(stderr, "array[1][4][5] = %d\n", array[1][4][5]);
+
             fprintf(stderr, "err_code = %d\n\n", err_code);
             free(mem_ptr);
         }
@@ -805,7 +814,8 @@ main()
         fprintf(stderr, "\n    2 dimensional short array");
         fprintf(stderr, "\n        dimensions: 15, 5");
         fprintf(stderr, "\n        starting subscripts: -1, -1");
-        fprintf(stderr, "\n        init: 11\n\n");
+        fprintf(stderr, "\n        init: 11\n");
+        fprintf(stderr, "\n    set array[5][3] = 4\n\n");
 
         asize = das(sizeof(short), 2, d, &err_code);
 
@@ -815,7 +825,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -855,7 +865,8 @@ main()
         fprintf(stderr, "\n    2 dimensional unsigned short array");
         fprintf(stderr, "\n        dimensions: 4, 5");
         fprintf(stderr, "\n        starting subscripts: 0, 1");
-        fprintf(stderr, "\n        init: 13\n\n");
+        fprintf(stderr, "\n        init: 13\n");
+        fprintf(stderr, "\n    set array[3][5] = 5\n\n");
 
         asize = das(sizeof(unsigned short), 2, d, &err_code);
 
@@ -865,15 +876,14 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
         {
             array[3][5] = 5;
 
-            fprintf(stderr, "sizeof(unsigned short) = %ld\n"
-                , sizeof(unsigned short));
+            fprintf(stderr, "sizeof(unsigned short) = %ld\n", sizeof(unsigned short));
             fprintf(stderr, "array size = %d\n\n", asize);
             for (i=st[0] ; i<st[0]+int(d[0]) ; i++)
             {
@@ -914,7 +924,10 @@ main()
         fprintf(stderr, "\n    1 dimensional four meg char string array");
         fprintf(stderr, "\n        dimensions: 3");
         fprintf(stderr, "\n        starting subscripts: 0");
-        fprintf(stderr, "\n        init: NULL\n\n");
+        fprintf(stderr, "\n        init: NULL\n");
+        fprintf(stderr, "\n    set array[0] = \"AXXXXXXXXX\"");
+        fprintf(stderr, "\n    set array[1] = \"XXXXBXXXXX\"");
+        fprintf(stderr, "\n    set array[2] = \"XXXXXXXXXC\"\n\n");
 
         asize = das(sizeof(STRING_FOUR_MEGS), 1, d, &err_code);
 
@@ -924,7 +937,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -937,8 +950,7 @@ main()
             strcpy((char *)&array[1], "XXXXBXXXXX");
             strcpy((char *)&array[2], "XXXXXXXXXC");
 
-            fprintf(stderr, "sizeof(STRING_FOUR_MEGS) = %ld\n"
-                , sizeof(STRING_FOUR_MEGS));
+            fprintf(stderr, "sizeof(STRING_FOUR_MEGS) = %ld\n", sizeof(STRING_FOUR_MEGS));
             fprintf(stderr, "array size = %d\n\n", asize);
             for (i=st[0]; i<st[0]+int(d[0]) ; i++)
             {
@@ -968,7 +980,9 @@ main()
         fprintf(stderr, "\n    2 dimensional double array(on stack)");
         fprintf(stderr, "\n        dimensions: 3, 3");
         fprintf(stderr, "\n        starting subscripts: 1, 1");
-        fprintf(stderr, "\n        init: 1.5\n\n");
+        fprintf(stderr, "\n        init: 1.5\n");
+        fprintf(stderr, "\n    allocate array on stack");
+        fprintf(stderr, "\n    print array with default value(1.5)\n\n");
 
         asize = das(sizeof(double), 2, d, &err_code);
 
@@ -976,7 +990,7 @@ main()
 
         if (array == NULL)
         {
-            fprintf(stderr, "daa(v): error on dynamic allocation. %s\n"
+            fprintf(stderr, "daa: error on dynamic allocation. %s\n"
                 , daa_errs[err_code]);
         }
         else
@@ -987,11 +1001,9 @@ main()
             {
                 for (j=st[1] ; j<st[1]+int(d[1]) ; j++)
                 {
-                    fprintf(stderr,
-                        "array[%2d][%2d] = %5.1f\n", i, j, array[i][j]);
+                    fprintf(stderr, "array[%2d][%2d] = %5.1f\n", i, j, array[i][j]);
                 }
             }
-
             fprintf(stderr, "err_code = %d\n\n", err_code);
         }
     }
