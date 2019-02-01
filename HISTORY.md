@@ -1,5 +1,10 @@
 ```
 
+ daa-1.0.7.tar.gz - 
+    a. all changes to code in daa_test.cpp to print more
+       informative test output.  this allows reading and verifying
+       the test output without referencing the test code.
+
  daa-1.0.6.tar.gz - 
     a. minor doc changes
     b. directory structure changes
@@ -26,7 +31,7 @@
        compiled in routines.
 
  daa-1.0.2.tar.gz - 
-    a. Remove bld.tar.xz file.
+    a. Remove daa.tar.xz file.
 
  daa-1.0.1.tar.gz - 
     a. Add const modifiers to eliminate warnings
