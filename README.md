@@ -32,7 +32,7 @@ Dynamic Array Allocator - C++ header file only library
 
     - see article in The C Users Journal, Nov. 1990. "A Flexible Dynamic Array Allocator"(included)
 
-    - 17 verification tests that show code usage examples, see daa_test.cpp
+    - 18 verification tests that show code usage examples, see daa_test.cpp
 
     - see cut/paste Examples section and API(das(), daa()) section below
 

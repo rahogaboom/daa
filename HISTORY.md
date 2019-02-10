@@ -1,5 +1,9 @@
 ```
 
+ daa-1.0.8.tar.gz - 
+    a. added one test to demonstrate passing and modification of
+       array slices in subroutines and subsequent visibility throught.
+
  daa-1.0.7.tar.gz - 
     a. all changes to code in daa_test.cpp to print more
        informative test output.  this allows reading and verifying
