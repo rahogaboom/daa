@@ -3,6 +3,8 @@
  daa-1.0.8.tar.gz - 
     a. added one test to demonstrate passing and modification of
        array slices in subroutines and subsequent visibility throught.
+    b. updates Examples section in daa.doc to use only three examples,
+       copied exactly, from daa_test.cpp.
 
  daa-1.0.7.tar.gz - 
     a. all changes to code in daa_test.cpp to print more

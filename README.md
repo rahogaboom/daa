@@ -39,9 +39,13 @@ Dynamic Array Allocator - C++ header file only library
     - a daa-compile.tar file is provided with a non-header compiled(clang, clang++, gcc, g++) version
 
     - for an excellent reference on this type of array(ptr to ptr to ...) access see Numerical Recipes
-      in C, Press, Flannery, Teukolsky, and Vettering, Cambridge University Press, 1992, pg. 20.
+      in C, Press, Flannery, Teukolsky, and Vettering, Cambridge University Press, 1992, pg. 20-23.
       Ch. 1 Preliminaries -> 1.2 Some C Conventions for Scientific Computing -> Matrices and
-      Two-Dimensional Arrays.
+      Two-Dimensional Arrays.  From the above reference read:
+          'Here is our bottom line: We avoid the fixed-size two-dimensional arrays of C as
+           being unsuitable data structures for representing matrices in scientific computing. We
+           adopt instead the convention “pointer to array of pointers,” with the array elements
+           pointing to the first element in the rows of each matrix.'
 
     - this file is the entire documentation needed to use the library
 
@@ -64,215 +68,287 @@ Files:
 
 Examples:
 
-    All examples are from the test code in daa_test.cpp.
+    An excerpt of TESTs 1, 5 and 18 from daa_test.cpp.
+        TEST 1  - demonstrate passing slices of arrays to subroutines and
+                  visibility of changes at any level throughout
+        TEST 5  - demonstrate 10 dimensional array with different starting
+                  subscripts for each dimension
+        TEST 18 - demonstrate single dimensional array with elements that
+                  are 4 megabyte strings
 
-    From TEST 1
-        int err_code = 0;
-        int asize = 0;
-        char *mem_ptr;
+    #include <cstdio>
+    #include <cstdlib>
+    #include <cstring>
 
-        unsigned int d[4] = {3, 5, 4, 2}; /* dimension */
-        int st[4] = {-1, -5, 10, 0}; /* start subscript */
-        double ****array = NULL; /* array pointer */
+    #include "daa.hpp"
 
-        /* calculate array size */
-        asize = das(sizeof(double), 4, d, &err_code);
+    /*
+     * test code for das()/daa().  all the tests are completely independent,
+     * that is, any test may be eliminated or moved elsewhere and run
+     * independently.  cut/paste tests into your code and modify as needed.
+     */
 
-        /* allocate memory */
-        mem_ptr = (char *)malloc(asize);
+    /*
+     * used in TESTs 1, 2, 3.  initializes four dimensional array[][][][] to integer
+     * values which are the sum of the dimension subscripts.
+     */
 
-        /* populate allocated memory with ptr to ptr ... and data */
-        array = (double ****) daa(sizeof(double), 4, d, st, &err_code, mem_ptr, NULL);
+        void
+    init4darray(
+        unsigned int d[4],
+        int st[4],
+        double ****array)
+    {
+        int i, j, k, l;
 
-        array[1][1][1][1] = 2;
 
-        fprintf(stderr, "array[1][1][1][1] = %5.1f\n" array[1][1][1][1]);
+        for (i=st[0] ; i<st[0]+int(d[0]) ; i++)
+        {
+            for (j=st[1] ; j<st[1]+int(d[1]) ; j++)
+            {
+                for (k=st[2] ; k<st[2]+int(d[2]) ; k++)
+                {
+                    for (l=st[3] ; l<st[3]+int(d[3]) ; l++)
+                    {
+                        array[i][j][k][l] = i + j + k + l;
+                    }
+                }
+            }
+        }
+    }
 
-        free(mem_ptr);
+    /*
+     * used in TEST 1 to demonstrate passing and modification of slices of arrays in subroutines
+     */
 
-    From TEST 3
-        int err_code = 0;
-        int asize = 0;
-        char *mem_ptr;
+    void f2(
+        double *array)
+    {
+        array[0] = 2.72;
+        array[1] = 2.72;
+    }
 
-        unsigned int d[1] = {10}; /* dimension */
-        int st[1] = {1}; /* start subscript */
-        double init = 10.10;
-        double *array = NULL; /* array pointer */
+    /*
+     * used in TEST 1 to demonstrate passing and modification of slices of arrays in subroutines
+     */
 
-        /* calculate array size */
-        asize = das(sizeof(double), 1, d, &err_code);
+    void f1(
+        double ***array)
+    {
+        array[-5][10][0] = 3.14;
 
-        /* allocate memory */
-        mem_ptr = (char *)malloc(asize);
+        f2(array[-1][13]);
+    }
 
-        /* populate allocated memory with ptr to ptr ... and data */
-        array = (double *) daa(sizeof(double), 1, d, st, &err_code, mem_ptr, (char *)&init);
+       int
+    main()
+    {
+        /*
+         * TEST 1
+         */
+        {
+            int err_code = 0;
+            int asize = 0;
+            char *mem_ptr;
 
-        array[10] = 4.5;
+            unsigned int d[4] = {3, 5, 4, 2}; /* dimensions */
+            int st[4] = {-1, -5, 10, 0}; /* starting subscripts */
+            double ****array = NULL; /* array pointer */
 
-        fprintf(stderr, "array size = %d\n", asize);
+            fprintf(stderr, "\nTEST 1");
+            fprintf(stderr, "\n    4 dimensional array of double");
+            fprintf(stderr, "\n        dimensions: 3, 5, 4, 2");
+            fprintf(stderr, "\n        starting subscripts: -1, -5, 10, 0");
+            fprintf(stderr, "\n        init: NULL\n");
+            fprintf(stderr, "\n    initializes four dimensional array[][][][] to integer values");
+            fprintf(stderr, "\n    which are the sum of the dimension subscripts.");
+            fprintf(stderr, "\n    descend into two subroutines(f1() -> f2()) and set values there:");
+            fprintf(stderr, "\n        set array[-1][-5][10][0] = 3.14 in f1();");
+            fprintf(stderr, "\n        set array[-1][-1][13][0] = 2.72 in f2();");
+            fprintf(stderr, "\n        set array[-1][-1][13][1] = 2.72 in f2();\n\n");
 
-        fprintf(stderr, "array[10] = %e\n", array[10]);
+            asize = das(sizeof(double), 4, d, &err_code);
 
-        fprintf(stderr, "err_code = %d\n", err_code);
+            mem_ptr = (char *)malloc(asize);
 
-        free(mem_ptr);
+            array = (double ****) daa(sizeof(double), 4, d, st, &err_code, mem_ptr, NULL);
 
-    From TEST 4
-        int err_code = 0;
-        int asize = 0;
-        char *mem_ptr;
+            if (array == NULL)
+            {
+                fprintf(stderr, "daa: error on dynamic allocation. %s\n"
+                    , daa_errs[err_code]);
+            }
+            else
+            {
+                init4darray(d, st, array);
 
-        unsigned int d[10] = {3, 3, 2, 4, 5, 4, 4, 4, 4, 4}; /* dimension */
-        int st[10] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5}; /* start subscript */
-        double init = 0;
-        double **********array = NULL; /* array pointer */
+                f1(array[-1]);
 
-        /* calculate array size */
-        asize = das(sizeof(double), 10, d, &err_code);
+                fprintf(stderr, "sizeof(double) = %ld\n", sizeof(double));
+                fprintf(stderr, "array size = %d\n\n", asize);
+                for (int i=st[0] ; i<st[0]+int(d[0]) ; i++)
+                {
+                    for (int j=st[1] ; j<st[1]+int(d[1]) ; j++)
+                    {
+                        for (int k=st[2] ; k<st[2]+int(d[2]) ; k++)
+                        {
+                            for (int l=st[3] ; l<st[3]+int(d[3]) ; l++)
+                            {
+                                fprintf(stderr, "array[%2d][%2d][%2d][%2d] = %5.2f\n"
+                                    , i, j, k, l, array[i][j][k][l]);
+                            }
+                        }
+                    }
+                }
+                fprintf(stderr, "err_code = %d\n\n", err_code);
+                free(mem_ptr);
+            }
+        }
 
-        /* allocate memory */
-        mem_ptr = (char *)malloc(asize);
+        /*
+         *  TEST 5
+         */
+        {
+            int err_code = 0;
+            int asize = 0;
+            char *mem_ptr;
 
-        /* populate allocated memory with ptr to ptr ... and data */
-        array = (double **********) daa(sizeof(double), 10, d, st, &err_code, mem_ptr, (char *)&init);
+            unsigned int d[10] = {3, 3, 2, 4, 5, 4, 4, 4, 4, 4}; /* dimensions */
+            int st[10] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5}; /* starting subscripts */
+            double data;
+            double init = 0;
+            double **********array = NULL; /* array pointer */
 
-        array[-4][-3][-2][-1][0][1][2][3][4][5] = 1.5e2;
+            fprintf(stderr, "\nTEST 5");
+            fprintf(stderr, "\n    10 dimensional double array");
+            fprintf(stderr, "\n        dimensions: 3, 3, 2, 4, 5, 4, 4, 4, 4, 4");
+            fprintf(stderr, "\n        starting subscripts: -4, -3, -2, -1, 0, 1, 2, 3, 4, 5");
+            fprintf(stderr, "\n        init: 0\n");
+            fprintf(stderr, "\n    this is by far the largest allocation test.  only the first and");
+            fprintf(stderr, "\n    last array elements are printed out.  they should be 1.0 and");
+            fprintf(stderr, "\n    368640.0 respectively.  the last number is obtained by taking");
+            fprintf(stderr, "\n    the product of all the dimensions(d[])\n\n");
 
-        fprintf(stderr, "array size = %d\n", asize);
+            asize = das(sizeof(double), 10, d, &err_code);
 
-        fprintf(stderr, "array[-4][-3][-2][-1][0][1][2][3][4][5] = %e\n",
-            array[-4][-3][-2][-1][0][1][2][3][4][5]);
+            mem_ptr = (char *)malloc(asize);
 
-        fprintf(stderr, "array[-4][-3][-2][-1][0][1][2][3][4][6] = %e\n",
-            array[-4][-3][-2][-1][0][1][2][3][4][6]);
+            array = (double **********) daa(sizeof(double), 10, d, st, &err_code, mem_ptr, (char *)&init);
 
-        fprintf(stderr, "err_code = %d\n", err_code);
+            if (array == NULL)
+            {
+                fprintf(stderr, "daa: error on dynamic allocation. %s\n"
+                    ,daa_errs[err_code]);
+            }
+            else
+            {
+                data = 0.;
+                for (int i0=st[0] ; i0<st[0]+int(d[0]) ; i0++)
+                {
+                   for (int i1=st[1] ; i1<st[1]+int(d[1]) ; i1++)
+                   {
+                      for (int i2=st[2] ; i2<st[2]+int(d[2]) ; i2++)
+                      {
+                         for (int i3=st[3] ; i3<st[3]+int(d[3]) ; i3++)
+                         {
+                            for (int i4=st[4] ; i4<st[4]+int(d[4]) ; i4++)
+                            {
+                               for (int i5=st[5] ; i5<st[5]+int(d[5]) ; i5++)
+                               {
+                                  for (int i6=st[6] ; i6<st[6]+int(d[6]) ; i6++)
+                                  {
+                                     for (int i7=st[7] ; i7<st[7]+int(d[7]) ; i7++)
+                                     {
+                                         for (int i8=st[8] ; i8<st[8]+int(d[8]) ; i8++)
+                                         {
+                                            for (int i9=st[9] ; i9<st[9]+int(d[9]) ; i9++)
+                                            {
+                                                array[i0][i1][i2][i3][i4]
+                                                     [i5][i6][i7][i8][i9] = ++data;
+                                            }
+                                         }
+                                     }
+                                  }
+                               }
+                            }
+                         }
+                      }
+                   }
+                }
 
-        free(mem_ptr);
+                fprintf(stderr, "sizeof(double) = %ld\n", sizeof(double));
+                fprintf(stderr, "array size = %d\n\n", asize);
+                fprintf(stderr, "array[-4][-3][-2][-1][0][1][2][3][4][5] = %e\n"
+                    , array[-4][-3][-2][-1][0][1][2][3][4][5]);
+                fprintf(stderr, "array[-2][-1][-1][2][4][4][5][6][7][8] = %e\n"
+                    , array[-2][-1][-1][2][4][4][5][6][7][8]);
+                fprintf(stderr, "err_code = %d\n\n", err_code);
+                free(mem_ptr);
+            }
+        }
 
-    From TEST 5
-        int err_code = 0;
-        int asize = 0;
-        char *mem_ptr;
+        /*
+         * TEST 17
+         */
+        {
+            int err_code = 0;
+            int asize = 0;
+            char *mem_ptr;
 
-        unsigned int d[1] = {10}; /* dimension */
-        int st[1] = {1}; /* start subscript */
-        struct s {
-            double d;
-            int l;
-        } *array = NULL, s_init = {1.25, 5}; /* array pointer */
+            unsigned int d[1] = {3}; /* dimensions */
+            int st[1] = {0}; /* starting subscripts */
 
-        /* calculate array size */
-        asize = das(sizeof(struct s), 1, d, &err_code);
+            const int FOUR_MEGS = 4*1024*1024;
 
-        /* allocate memory */
-        mem_ptr = (char *)malloc(asize);
-
-        /* populate allocated memory with ptr to ptr ... and data */
-        array = (struct s *) daa(sizeof(struct s), 1, d, st, &err_code, mem_ptr, (char *)&s_init);
-
-        array[1].l= 10;
-        array[1].d= .5;
-        array[10].l = 4;
-        array[10].d = 4.5;
-
-        fprintf(stderr, "sizeof(struct s) = %ld\n", sizeof(struct s));
-
-        fprintf(stderr, "array size = %d\n", asize);
-
-        fprintf(stderr, "array[1].d = %f\n", array[1].d);
-        fprintf(stderr, "array[10].l = %2d\n", array[10].l);
-
-        fprintf(stderr, "err_code = %d\n", err_code);
-
-        free(mem_ptr);
-
-    From TEST 13
-        int err_code = 0;
-        int asize = 0;
-        char *mem_ptr;
-
-        unsigned int d[3] = {2, 5, 6}; /* dimension */
-        int st[3] = {0, 0, 0}; /* start subscript */
-        enum e {a,b,c} ***array = NULL, e_init = {c}; /* array pointer */
-
-        /* calculate array size */
-        asize = das(sizeof(enum e), 3, d, &err_code);
-
-        /* allocate memory */
-        mem_ptr = (char *)malloc(asize);
-
-        /* populate allocated memory with ptr to ptr ... and data */
-        array = (enum e ***) daa(sizeof(enum e), 3, d, st, &err_code, mem_ptr, (char *)&e_init);
-
-        fprintf(stderr, "sizeof(enum e) = %ld\n",sizeof(enum e));
-
-        fprintf(stderr, "array size = %d\n", asize);
-
-        fprintf(stderr, "array[1][4][4] = %d\n", array[1][4][4]);
-
-        array[1][4][5] = a;
-
-        fprintf(stderr, "array[1][4][5] = %d\n", array[1][4][5]);
-
-        array[1][4][5] = b;
-
-        fprintf(stderr, "array[1][4][5] = %d\n", array[1][4][5]);
-
-        fprintf(stderr, "err_code = %d\n", err_code);
-
-        free(mem_ptr);
-
-    From TEST 16
-        int err_code = 0;
-        int asize = 0;
-        char *mem_ptr;
-
-        unsigned int d[1] = {3}; /* dimension */
-        int st[1] = {0}; /* start subscript */
-
-        #define FOUR_MEGS (4*1024*1024)
-
-        /* four megs of unsigned char */
+            /* four megs of unsigned char */
             typedef struct
             {
                 unsigned char s[FOUR_MEGS];
             } STRING_FOUR_MEGS;
 
-        STRING_FOUR_MEGS *array = NULL; /* array pointer */
+            STRING_FOUR_MEGS *array = NULL; /* array pointer */
 
-        /* calculate array size */
-        asize = das(sizeof(STRING_FOUR_MEGS), 1, d, &err_code);
+            fprintf(stderr, "\nTEST 17");
+            fprintf(stderr, "\n    1 dimensional four meg char string array");
+            fprintf(stderr, "\n        dimensions: 3");
+            fprintf(stderr, "\n        starting subscripts: 0");
+            fprintf(stderr, "\n        init: NULL\n");
+            fprintf(stderr, "\n    set array[0] = \"AXXXXXXXXX\"");
+            fprintf(stderr, "\n    set array[1] = \"XXXXBXXXXX\"");
+            fprintf(stderr, "\n    set array[2] = \"XXXXXXXXXC\"\n\n");
 
-        /* allocate memory */
-        mem_ptr = (char *)malloc(asize);
+            asize = das(sizeof(STRING_FOUR_MEGS), 1, d, &err_code);
 
-        /* populate allocated memory with ptr to ptr ... and data */
-        array = (STRING_FOUR_MEGS *)
-                daa(sizeof(STRING_FOUR_MEGS), 1, d, st, &err_code, mem_ptr, (char *)NULL);
+            mem_ptr = (char *)malloc(asize);
 
-        memset((unsigned char *)&array[0], 0, FOUR_MEGS);
-        memset((unsigned char *)&array[1], 1, FOUR_MEGS);
-        memset((unsigned char *)&array[2], 2, FOUR_MEGS);
+            array = (STRING_FOUR_MEGS *) daa(sizeof(STRING_FOUR_MEGS), 1, d, st, &err_code, mem_ptr, (char *)NULL);
 
-        strcpy((char *)&array[0], "AXXXXXXXXX");
-        strcpy((char *)&array[1], "XXXXBXXXXX");
-        strcpy((char *)&array[2], "XXXXXXXXXC");
+            if (array == NULL)
+            {
+                fprintf(stderr, "daa: error on dynamic allocation. %s\n"
+                    , daa_errs[err_code]);
+            }
+            else
+            {
+                memset((unsigned char *)&array[0], 0, FOUR_MEGS);
+                memset((unsigned char *)&array[1], 1, FOUR_MEGS);
+                memset((unsigned char *)&array[2], 2, FOUR_MEGS);
 
-        fprintf(stderr, "sizeof(STRING_FOUR_MEGS) = %ld\n" , sizeof(STRING_FOUR_MEGS));
+                strcpy((char *)&array[0], "AXXXXXXXXX");
+                strcpy((char *)&array[1], "XXXXBXXXXX");
+                strcpy((char *)&array[2], "XXXXXXXXXC");
 
-        fprintf(stderr, "array size = %d\n", asize);
-
-        for (int i=st[0]; i<st[0]+int(d[0]) ; i++)
-        {
-            fprintf(stderr, "array[%2d] = %s\n", i, (unsigned char *)&array[i]);
+                fprintf(stderr, "sizeof(STRING_FOUR_MEGS) = %ld\n", sizeof(STRING_FOUR_MEGS));
+                fprintf(stderr, "array size = %d\n\n", asize);
+                for (int i=st[0]; i<st[0]+int(d[0]) ; i++)
+                {
+                    fprintf(stderr, "array[%2d] = %s\n", i, (unsigned char *)&array[i]);
+                }
+                fprintf(stderr, "err_code = %d\n\n", err_code);
+                free(mem_ptr);
+            }
         }
-
-        fprintf(stderr, "err_code = %d\n", err_code);
-
-        free(mem_ptr);
+    }
 
 API:
 
