@@ -72,7 +72,7 @@ Examples:
                   visibility of changes at any level throughout
         TEST 5  - demonstrate 10 dimensional array with different starting
                   subscripts for each dimension
-        TEST 18 - demonstrate single dimensional array with elements that
+        TEST 17 - demonstrate single dimensional array with elements that
                   are 4 megabyte strings
 
     #include <cstdio>
