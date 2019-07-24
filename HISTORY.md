@@ -1,4 +1,8 @@
 ```
+ daa-1.0.9.tar.gz - 
+    a. checked against compilers:
+           g++     - g++ (GCC) 9.1.1 20190503 (Red Hat 9.1.1-1)
+           clang++ - clang version 8.0.0 (Fedora 8.0.0-1.fc30)
 
  daa-1.0.8.tar.gz - 
     a. added one test to demonstrate passing and modification of
