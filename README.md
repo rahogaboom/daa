@@ -79,7 +79,6 @@ Examples:
                   are 4 megabyte strings
 
     #include <cstdio>
-    #include <cstdlib>
     #include <cstring>
 
     #include "daa.hpp"
@@ -145,6 +144,8 @@ Examples:
        int
     main()
     {
+        using namespace boost;
+
         /*
          * TEST 1
          */

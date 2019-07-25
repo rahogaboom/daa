@@ -1,5 +1,9 @@
 ```
 
+ daa-1.0.10.tar.gz - 
+    a. changes related to updating project to conform to the boost
+       header file and namespace standard.
+
  daa-1.0.9.tar.gz - 
     a. checked against compilers:
            g++     - g++ (GCC) 9.1.1 20190503 (Red Hat 9.1.1-1)
