@@ -1,6 +1,5 @@
 
 #include <cstdio>
-#include <cstdlib>
 #include <cstring>
 
 #include "daa.hpp"
@@ -66,6 +65,8 @@ void f1(
    int
 main()
 {
+    using namespace boost;
+
     /*
      * TEST 1
      */
