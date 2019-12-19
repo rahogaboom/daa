@@ -70,24 +70,13 @@ Files:
 
 Examples:
 
-    An excerpt of TESTs 1, 5 and 17 from daa_test.cpp
+    An excerpt of TESTs 1, 5 and 17 from daa_test.cpp.
         TEST 1  - demonstrate passing slices of arrays to subroutines and
                   visibility of changes at any level throughout
         TEST 5  - demonstrate 10 dimensional array with different starting
                   subscripts for each dimension
         TEST 17 - demonstrate single dimensional array with elements that
                   are 4 megabyte strings
-
-    //  Boost daa_test.cpp
-
-    //
-    //          Copyright Richard Allen Hogaboom 1997 - 2019.
-    // Distributed under the Boost Software License, Version 1.0.
-    //    (See accompanying file LICENSE_1_0.txt or copy at
-    //          http://www.boost.org/LICENSE_1_0.txt)
-    //
-    // Boost Software License - Version 1.0 - August 17th, 2003
-    //
 
     #include <cstdio>
     #include <cstring>
@@ -155,7 +144,7 @@ Examples:
        int
     main()
     {
-        using namespace boost;
+        using namespace Daa;
 
         /*
          * TEST 1
@@ -515,5 +504,6 @@ daa(
     int *err_code,
     char *base_ptr,
     char *init_ptr)
+
 
 ```

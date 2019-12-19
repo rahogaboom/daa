@@ -1,5 +1,11 @@
 ```
 
+ daa-1.0.11.tar.gz - 
+    a. change namespace to Daa.
+    b. checked against compilers:
+           g++     - g++ (GCC) 9.2.1 20190827 (Red Hat 9.2.1-1)
+           clang++ - clang version 9.0.0 (Fedora 9.0.0-1.fc31)
+
  daa-1.0.10.tar.gz - 
     a. changes related to updating project to conform to the boost
        header file and namespace standard.

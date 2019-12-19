@@ -1,5 +1,5 @@
 
-//  Boost daa.hpp
+//  daa.hpp
 
 //
 //          Copyright Richard Allen Hogaboom 1997 - 2019.
@@ -10,12 +10,12 @@
 // Boost Software License - Version 1.0 - August 17th, 2003
 //
 
-#ifndef BOOST_DAA_HPP
-#define BOOST_DAA_HPP
+#ifndef DAA_HPP
+#define DAA_HPP
 
 #include <cstdlib>
 
-namespace boost
+namespace Daa
 {
 
 /*
@@ -511,7 +511,7 @@ daa(
         ptr_ptr, dim, st, dp);
 }
 
-} // boost namespace
+} // daa namespace
 
-#endif  // BOOST_DAA_HPP
+#endif  // DAA_HPP
 

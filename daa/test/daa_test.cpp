@@ -1,5 +1,5 @@
 
-//  Boost daa_test.cpp
+//  daa_test.cpp
 
 //
 //          Copyright Richard Allen Hogaboom 1997 - 2019.
@@ -76,7 +76,7 @@ void f1(
    int
 main()
 {
-    using namespace boost;
+    using namespace Daa;
 
     /*
      * TEST 1
